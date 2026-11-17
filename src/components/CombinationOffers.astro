@@ -1,0 +1,230 @@
+---
+const offers = [
+  {
+    id: 1,
+    title: "First Combination",
+    description: "First description",
+    price: "99 €",
+  },
+
+  {
+    id: 2,
+    title: "Second Combination",
+    description: "Second description",
+    price: "99 €",
+  },
+];
+---
+
+<section class="combination-offers">
+  <div class="offers-intro">
+    <h2>Лучшие комбинации</h2>
+    <p>
+      Изучите наши специальные предложения и выберите подходящую комбинацию
+      процедур.
+    </p>
+    <a href="#booking" class="offers-button">
+      Записаться на приём
+    </a>
+  </div>
+  <div class="offers-content">
+    <div class="offers-list">
+      {offers.map((offer) => (
+        <article class="offer-card">
+          <div class="offer-image">
+            <span>Foto</span>
+          </div>
+          <div class="offer-info">
+            <h3>{offer.title}</h3>
+            <p>{offer.description}</p>
+            <span class="offer-price">{offer.price}</span>
+          </div>
+          <a
+            href="#booking"
+            class="offer-arrow"
+            aria-label={`Mehr über ${offer.title}`}
+          >
+            →
+          </a>
+        </article>
+      ))}
+    </div>
+    <button class="offers-next" aria-label="Weitere Angebote">
+      →
+    </button>
+  </div>
+</section>
+<style>
+  .combination-offers {
+    width: 100%;
+    max-width: 1440px;
+    height: 450px;
+    padding: 40px 60px;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    background-color: #dedede;
+
+    display: grid;
+    grid-template-columns: 35% 65%;
+    align-items: center;
+    gap: 30px;
+  }
+
+  /* LEFT SIDE */
+
+  .offers-intro {
+    max-width: 380px;
+  }
+
+  .offers-intro h2 {
+    margin: 0 0 20px;
+    font-size: 28px;
+    font-weight: 500;
+    color: #292929;
+  }
+
+  .offers-intro p {
+    max-width: 320px;
+    margin: 0 0 24px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  .offers-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 30px;
+    background-color: #292929;
+    color: white;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  /* RIGHT SIDE */
+
+  .offers-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-width: 0;
+  }
+
+  .offers-list {
+    display: flex;
+    gap: 24px;
+    flex: 0 1 586px;
+    min-width: 0;
+
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .offers-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* OFFER CARD */
+
+  .offer-card {
+    position: relative;
+    flex: 0 0 281px;
+    width: 281px;
+    height: 287px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #c4c4c4;
+    border-radius: 12px;
+    overflow: hidden;
+
+    scroll-snap-align: start;
+  }
+
+  .offer-image {
+    height: 155px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #aaa;
+    color: #555;
+    font-size: 14px;
+  }
+
+  .offer-info {
+    flex: 1;
+    padding: 18px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .offer-info h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 500;
+    color: #292929;
+  }
+
+  .offer-info p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  .offer-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #292929;
+  }
+
+  /* CARD ARROW */
+
+  .offer-arrow {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background-color: #999;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+  /* NEXT ARROW */
+
+  .offers-next {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background-color: #888;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+</style>
