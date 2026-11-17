@@ -1,0 +1,397 @@
+---
+const beforeLong = [
+  {
+    title: "Keine intensive Sonnenexposition",
+    description: "Vermeiden Sie direkte Sonneneinstrahlung und Solarium.",
+    image: "sun",
+  },
+  {
+    title: "Keine Haarentfernung mit der Wurzel",
+    description: "Verzichten Sie auf Waxing, Epilation und Sugaring.",
+    image: "skin",
+  },
+];
+
+const beforeAppointment = [
+  {
+    title: "Haut rasieren",
+    description: "Rasieren Sie die Behandlungszone 24 Stunden vor dem Termin.",
+    image: "razor",
+  },
+  {
+    title: "Haut sauber halten",
+    description:
+      "Verwenden Sie keine Cremes, Öle oder Deodorants auf der Behandlungszone.",
+    image: "clean",
+  },
+];
+
+const afterLaser = [
+  {
+    title: "Keine starke Hitze",
+    description: "Verzichten Sie auf Sauna, Dampfbad und heiße Bäder.",
+    image: "heat",
+  },
+  {
+    title: "Sonnenschutz verwenden",
+    description: "Schützen Sie die behandelte Haut vor direkter Sonne.",
+    image: "spf",
+  },
+  {
+    title: "Haut sanft pflegen",
+    description: "Verwenden Sie eine milde und beruhigende Pflege.",
+    image: "care",
+  },
+  {
+    title: "Sport vermeiden",
+    description:
+      "Verzichten Sie zunächst auf intensives Training und starkes Schwitzen.",
+    image: "sport",
+  },
+];
+---
+
+<section class="preparation" id="preparation">
+  <div class="preparation-inner">
+    <div class="section-heading">
+      <h2>Vorbereitung & Nachsorge</h2>
+      <p>
+        Für ein optimales Behandlungsergebnis beachten Sie bitte unsere
+        Empfehlungen vor und nach der Laserbehandlung.
+      </p>
+    </div>
+
+    <div class="preparation-columns">
+      <!-- LEFT: BEFORE LASER -->
+
+      <div class="preparation-column">
+        <div class="column-heading">
+          <span class="column-number">01</span>
+          <h3>Vor dem Laser</h3>
+        </div>
+
+        <div class="recommendation-group">
+          <h4>3–4 Wochen vor der Behandlung</h4>
+
+          <div class="recommendation-grid">
+            {beforeLong.map((item) => (
+              <article class="recommendation-card">
+                <div class="recommendation-image">
+                  <div class={`image-placeholder ${item.image}`}>
+                    <span>Foto</span>
+                  </div>
+                </div>
+                <div class="recommendation-info">
+                  <h5>{item.title}</h5>
+                  <p>{item.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="recommendation-group">
+          <h4>Kurz vor Ihrem Termin</h4>
+
+          <div class="recommendation-grid">
+            {beforeAppointment.map((item) => (
+              <article class="recommendation-card">
+                <div class="recommendation-image">
+                  <div class={`image-placeholder ${item.image}`}>
+                    <span>Foto</span>
+                  </div>
+                </div>
+                <div class="recommendation-info">
+                  <h5>{item.title}</h5>
+                  <p>{item.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: AFTER LASER -->
+
+      <div class="preparation-column after-column">
+        <div class="column-heading">
+          <span class="column-number">02</span>
+          <h3>Nach dem Laser</h3>
+        </div>
+
+        <div class="recommendation-group">
+          <h4>Erste 24–48 Stunden</h4>
+
+          <div class="recommendation-grid">
+            {afterLaser.map((item) => (
+              <article class="recommendation-card">
+                <div class="recommendation-image">
+                  <div class={`image-placeholder ${item.image}`}>
+                    <span>Foto</span>
+                  </div>
+                </div>
+                <div class="recommendation-info">
+                  <h5>{item.title}</h5>
+                  <p>{item.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .preparation {
+    width: 100%;
+    padding: 80px 60px;
+    box-sizing: border-box;
+    background: #f8f5f4;
+  }
+
+  .preparation-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  /* SECTION HEADING */
+
+  .section-heading {
+    margin-bottom: 45px;
+  }
+
+  .section-heading h2 {
+    margin: 0 0 14px;
+    font-size: 32px;
+    font-weight: 500;
+    color: #292929;
+  }
+
+  .section-heading p {
+    max-width: 600px;
+    margin: 0;
+    color: #777;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* TWO COLUMNS */
+
+  .preparation-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  .preparation-column {
+    min-width: 0;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+  }
+
+  .after-column {
+    background: #f1e7e9;
+  }
+
+  /* COLUMN HEADING */
+
+  .column-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 22px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #e8dfe2;
+  }
+
+  .column-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #ead9df;
+    color: #805665;
+    font-size: 13px;
+  }
+
+  .column-heading h3 {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 500;
+    color: #292929;
+  }
+
+  /* RECOMMENDATION GROUP */
+
+  .recommendation-group {
+    margin-bottom: 35px;
+  }
+
+  .recommendation-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .recommendation-group h4 {
+    margin: 0 0 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #444;
+  }
+
+  /* CARDS */
+
+  .recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .recommendation-card {
+    min-width: 0;
+    overflow: hidden;
+    background: #faf8f7;
+    border-radius: 9px;
+  }
+
+  .recommendation-image {
+    width: 100%;
+    height: 145px;
+    overflow: hidden;
+  }
+
+  /* IMAGE PLACEHOLDERS */
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8dfe2;
+    color: #977c85;
+    font-size: 13px;
+    transition: transform 0.3s;
+  }
+
+  .recommendation-card:hover .image-placeholder {
+    transform: scale(1.04);
+  }
+
+  .image-placeholder span {
+    position: relative;
+  }
+
+  .image-placeholder.sun {
+    background: #eee3d5;
+  }
+  .image-placeholder.skin {
+    background: #eadbd5;
+  }
+  .image-placeholder.razor {
+    background: #e4dce0;
+  }
+  .image-placeholder.clean {
+    background: #e5e8e3;
+  }
+  .image-placeholder.heat {
+    background: #eadbd7;
+  }
+  .image-placeholder.spf {
+    background: #eee5d6;
+  }
+  .image-placeholder.care {
+    background: #e1e8e1;
+  }
+  .image-placeholder.sport {
+    background: #e3e0e8;
+  }
+
+  .recommendation-info {
+    padding: 15px;
+  }
+
+  .recommendation-info h5 {
+    margin: 0 0 8px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .recommendation-info p {
+    margin: 0;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 1000px) {
+    .preparation {
+      padding: 60px 30px;
+    }
+
+    .preparation-columns {
+      gap: 18px;
+    }
+
+    .preparation-column {
+      padding: 22px;
+    }
+
+    .recommendation-grid {
+      gap: 10px;
+    }
+
+    .recommendation-image {
+      height: 120px;
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 700px) {
+    .preparation {
+      padding: 45px 16px;
+    }
+
+    .section-heading h2 {
+      font-size: 26px;
+    }
+
+    .preparation-columns {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .preparation-column {
+      padding: 20px;
+    }
+
+    .column-heading h3 {
+      font-size: 21px;
+    }
+
+    .recommendation-image {
+      height: 135px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .recommendation-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .recommendation-image {
+      height: 170px;
+    }
+  }
+</style>
