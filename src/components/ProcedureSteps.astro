@@ -1,0 +1,185 @@
+---
+const steps = [
+  {
+    number: "01",
+    title: "Beratung",
+    description:
+      "Wir besprechen Ihre Wünsche und analysieren Ihre Haut und Haarstruktur.",
+  },
+  {
+    number: "02",
+    title: "Vorbereitung",
+    description:
+      "Die Behandlungszone wird vorbereitet und die passenden Einstellungen werden gewählt.",
+  },
+  {
+    number: "03",
+    title: "Behandlung",
+    description:
+      "Die Laserbehandlung erfolgt präzise und individuell abgestimmt.",
+  },
+  {
+    number: "04",
+    title: "Nachsorge",
+    description:
+      "Sie erhalten Empfehlungen für die richtige Pflege nach der Behandlung.",
+  },
+];
+---
+
+<section class="procedure-steps" id="procedure">
+  <div class="procedure-inner">
+    <h2>Wie läuft die Prozedur ab?</h2>
+    <div class="steps-grid">
+      {steps.map((step, index) => (
+        <article class="step">
+          <div class="step-visual">
+            <span class="step-number">{step.number}</span>
+
+            {index !== steps.length - 1 && (
+              <span class="step-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 42 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 8H39M32 1L39 8L32 15"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </span>
+            )}
+          </div>
+
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .procedure-steps {
+    width: 100%;
+    padding: 25px 60px 35px;
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  .procedure-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  .procedure-inner h2 {
+    margin: 0 0 32px;
+    color: #292929;
+    font-size: 26px;
+    font-weight: 500;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 30px;
+  }
+
+  .step {
+    min-width: 0;
+  }
+
+  .step-visual {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .step-number {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #dedede;
+    color: #292929;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .step-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    margin: 0 12px;
+    color: #292929;
+  }
+
+  .step-arrow svg {
+    display: block;
+    width: 100%;
+    max-width: 42px;
+    height: 16px;
+    overflow: visible;
+  }
+
+  .step h3 {
+    margin: 0 0 10px;
+    color: #292929;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .step p {
+    max-width: 230px;
+    margin: 0;
+    color: #555;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 900px) {
+    .procedure-steps {
+      padding: 30px;
+    }
+
+    .steps-grid {
+      gap: 18px;
+    }
+
+    .step-arrow {
+      margin: 0 6px;
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+    .procedure-steps {
+      padding: 35px 16px;
+    }
+
+    .procedure-inner h2 {
+      font-size: 23px;
+    }
+
+    .steps-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 30px;
+      column-gap: 20px;
+    }
+
+    .step-arrow {
+      display: none;
+    }
+  }
+</style>
