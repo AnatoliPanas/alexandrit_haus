@@ -1,0 +1,166 @@
+---
+const contraindications = [
+  "Bei bestimmten Hauterkrankungen oder akuten Hautentzündungen",
+  "Bei Einnahme bestimmter lichtempfindlich machender Medikamente",
+  "Während der Schwangerschaft",
+  "Bei frischer Bräunung oder Sonnenbrand",
+];
+---
+
+<section class="treatment-notes">
+  <div class="notes-inner">
+    <h2>Wann ist eine Behandlung nicht möglich?</h2>
+
+    <div class="notes-card">
+      <p class="notes-intro">
+        In bestimmten Situationen sollte auf eine Laserbehandlung verzichtet
+        werden oder zunächst eine fachliche Abklärung erfolgen.
+      </p>
+
+      <ul class="notes-list">
+        {contraindications.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+
+      <div class="notes-footer">
+        <h3>Immer noch unsicher?</h3>
+
+        <a href="#booking" class="consultation-button">
+          BERATUNGSTERMIN BUCHEN
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .treatment-notes {
+    width: 100%;
+    padding: 30px 60px 35px;
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  .notes-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  .notes-inner h2 {
+    margin: 0 0 18px;
+    color: #292929;
+    font-size: 25px;
+    font-weight: 500;
+  }
+
+  .notes-card {
+    width: 100%;
+    min-height: 170px;
+    padding: 24px 30px;
+    box-sizing: border-box;
+
+    background: #d8c3c6;
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .notes-intro {
+    margin: 0 0 18px;
+    color: #292929;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .notes-list {
+    margin: 0;
+    padding-left: 18px;
+    color: #333;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .notes-list li {
+    padding-left: 2px;
+  }
+
+  .notes-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 22px;
+  }
+
+  .notes-footer h3 {
+    margin: 0;
+    color: #292929;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .consultation-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 10px 16px;
+    border-radius: 30px;
+
+    background: #8f777b;
+    color: #fff;
+
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+
+    transition: background 0.2s;
+  }
+
+  .consultation-button:hover {
+    background: #70565d;
+  }
+
+  .consultation-button span {
+    font-size: 16px;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 900px) {
+    .treatment-notes {
+      padding: 30px;
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+    .treatment-notes {
+      padding: 25px 16px;
+    }
+
+    .notes-inner h2 {
+      font-size: 21px;
+    }
+
+    .notes-card {
+      padding: 20px;
+    }
+
+    .notes-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .consultation-button {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+</style>
