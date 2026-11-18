@@ -1,0 +1,176 @@
+---
+const questions = [
+  {
+    question: "Ist die Laserhaarentfernung schmerzhaft?",
+    answer:
+      "Die Behandlung wird individuell angepasst. Dank moderner Lasertechnologie kann die Behandlung angenehm und schonend durchgeführt werden.",
+  },
+  {
+    question: "Wie viele Behandlungen sind notwendig?",
+    answer:
+      "Die Anzahl der Behandlungen hängt von Hauttyp, Haarstruktur und Behandlungszone ab. Im persönlichen Beratungsgespräch erstellen wir einen individuellen Behandlungsplan.",
+  },
+  {
+    question: "Für welche Hauttypen ist die Behandlung geeignet?",
+    answer:
+      "Die Eignung hängt unter anderem vom Hauttyp und der Haarfarbe ab. Wir prüfen dies vor der Behandlung individuell.",
+  },
+  {
+    question: "Was muss ich vor der Behandlung beachten?",
+    answer:
+      "Bitte beachten Sie unsere Empfehlungen zur Vorbereitung. Alle wichtigen Informationen finden Sie in unserem Bereich Vorbereitung und Nachsorge.",
+  },
+];
+---
+
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <h2>FAQ</h2>
+
+    <div class="faq-list">
+      {questions.map((item, index) => (
+        <details class="faq-item">
+          <summary>
+            <span>{item.question}</span>
+
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 5V19M5 12H19"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </span>
+          </summary>
+
+          <div class="faq-answer">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    width: 100%;
+    padding: 25px 60px 80px;
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  .faq-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  .faq-inner h2 {
+    margin: 0 0 20px;
+    color: #292929;
+    font-size: 26px;
+    font-weight: 500;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .faq-item {
+    width: 100%;
+    background: #dedede;
+    border-radius: 30px;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+
+  .faq-item[open] {
+    background: #f2e9ec;
+    border-radius: 20px;
+  }
+
+  .faq-item summary {
+    min-height: 44px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    color: #292929;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+
+  .faq-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    padding: 0 50px 18px 20px;
+  }
+
+  .faq-answer p {
+    max-width: 800px;
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 900px) {
+    .faq-section {
+      padding: 30px;
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+    .faq-section {
+      padding: 25px 16px 50px;
+    }
+
+    .faq-inner h2 {
+      font-size: 23px;
+    }
+
+    .faq-item summary {
+      font-size: 13px;
+      padding: 12px 16px;
+    }
+
+    .faq-answer {
+      padding: 0 16px 16px;
+    }
+  }
+</style>
