@@ -1,0 +1,160 @@
+---
+const bookingUrl = "";
+---
+
+<section class="booking-cta" id="booking">
+  <div class="booking-inner">
+    <div class="booking-content">
+      <h2>Zeit für Ihre Schönheit</h2>
+
+      <p>
+        Gönnen Sie sich eine Auszeit und entdecken Sie unsere professionellen
+        Beauty-Behandlungen. Wir freuen uns auf Ihren Besuch!
+      </p>
+
+      {bookingUrl ? (
+        <a
+          href={bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="booking-button"
+        >
+          JETZT TERMIN BUCHEN
+          <span aria-hidden="true">→</span>
+        </a>
+      ) : (
+        <span
+          class="booking-button booking-disabled"
+          aria-label="Online-Buchung folgt"
+        >
+          JETZT TERMIN BUCHEN
+          <span aria-hidden="true">→</span>
+        </span>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .booking-cta {
+    width: 100%;
+    padding: 35px 60px 65px;
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  .booking-inner {
+    max-width: 1320px;
+    min-height: 280px;
+    margin: 0 auto;
+    padding: 50px 60px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #dedede;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .booking-content {
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .booking-content h2 {
+    margin: 0 0 18px;
+    color: #292929;
+    font-size: 32px;
+    font-weight: 500;
+  }
+
+  .booking-content p {
+    max-width: 520px;
+    margin: 0 0 28px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .booking-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    min-height: 44px;
+    padding: 12px 24px;
+    box-sizing: border-box;
+
+    background: #292929;
+    color: #fff;
+    border-radius: 30px;
+
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+  }
+
+  a.booking-button:hover {
+    background: #805665;
+    transform: translateY(-2px);
+  }
+
+  .booking-button span {
+    font-size: 18px;
+  }
+
+  .booking-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 900px) {
+    .booking-cta {
+      padding: 30px;
+    }
+
+    .booking-inner {
+      padding: 45px 30px;
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+    .booking-cta {
+      padding: 25px 16px 45px;
+    }
+
+    .booking-inner {
+      min-height: 260px;
+      padding: 40px 20px;
+    }
+
+    .booking-content h2 {
+      font-size: 26px;
+    }
+
+    .booking-content p {
+      font-size: 13px;
+    }
+
+    .booking-button {
+      width: 100%;
+      max-width: 280px;
+      gap: 12px;
+      font-size: 11px;
+    }
+  }
+</style>
