@@ -1,0 +1,322 @@
+---
+const reviews = [
+  {
+    name: "Anna M.",
+    initials: "AM",
+    date: "Vor 2 Wochen",
+    text: "Ich bin sehr zufrieden mit der Behandlung. Alles war professionell und angenehm. Ich habe mich sofort wohlgefühlt!",
+  },
+  {
+    name: "Sophie K.",
+    initials: "SK",
+    date: "Vor 1 Monat",
+    text: "Sehr freundlicher Service und eine tolle Atmosphäre. Die Beratung war ausführlich und ich komme gerne wieder.",
+  },
+  {
+    name: "Laura B.",
+    initials: "LB",
+    date: "Vor 3 Wochen",
+    text: "Eine sehr angenehme Erfahrung. Die Behandlung wurde sorgfältig durchgeführt und alle Fragen wurden beantwortet.",
+  },
+  {
+    name: "Maria S.",
+    initials: "MS",
+    date: "Vor 1 Woche",
+    text: "Ich bin begeistert! Sehr professionelle Arbeit und ein schönes Studio. Absolute Empfehlung!",
+  },
+  {
+    name: "Julia R.",
+    initials: "JR",
+    date: "Vor 2 Monaten",
+    text: "Ich habe mich sehr gut aufgehoben gefühlt. Freundliche Beratung und eine angenehme Behandlung.",
+  },
+];
+---
+
+<section class="bewertungen" id="bewertungen">
+  <div class="bewertungen-inner">
+    <div class="bewertungen-heading">
+      <div>
+        <h2>Bewertungen</h2>
+        <p>Das sagen unsere Kundinnen</p>
+      </div>
+    </div>
+
+    <div class="rating-overview">
+      <span class="rating-number">5.0</span>
+
+      <div class="rating-details">
+        <div class="rating-stars" aria-label="5 von 5 Sternen">
+          ★★★★★
+        </div>
+        <span>Unsere Kundinnen bewerten uns</span>
+      </div>
+    </div>
+
+    <div class="reviews-wrapper">
+      <button
+        class="reviews-arrow"
+        id="reviews-prev"
+        type="button"
+        aria-label="Vorherige Bewertungen"
+      >
+        ←
+      </button>
+
+      <div class="reviews-list" id="reviews-list">
+        {reviews.map((review) => (
+          <article class="review-card">
+            <div class="review-user">
+              <div class="review-avatar">{review.initials}</div>
+
+              <div class="review-user-info">
+                <h3>{review.name}</h3>
+                <span>{review.date}</span>
+              </div>
+            </div>
+
+            <div class="review-stars">★★★★★</div>
+
+            <p class="review-text">{review.text}</p>
+          </article>
+        ))}
+      </div>
+
+      <button
+        class="reviews-arrow"
+        id="reviews-next"
+        type="button"
+        aria-label="Weitere Bewertungen"
+      >
+        →
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const reviewsList = document.querySelector<HTMLElement>("#reviews-list");
+  const nextButton = document.querySelector<HTMLButtonElement>("#reviews-next");
+  const prevButton = document.querySelector<HTMLButtonElement>("#reviews-prev");
+
+  nextButton?.addEventListener("click", () => {
+    reviewsList?.scrollBy({
+      left: reviewsList.clientWidth * 0.7,
+      behavior: "smooth",
+    });
+  });
+
+  prevButton?.addEventListener("click", () => {
+    reviewsList?.scrollBy({
+      left: -reviewsList.clientWidth * 0.7,
+      behavior: "smooth",
+    });
+  });
+</script>
+
+<style>
+  .bewertungen {
+    width: 100%;
+    padding: 35px 60px 60px;
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  .bewertungen-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  /* HEADING */
+
+  .bewertungen-heading h2 {
+    margin: 0 0 8px;
+    color: #292929;
+    font-size: 25px;
+    font-weight: 500;
+  }
+
+  .bewertungen-heading p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+  }
+
+  /* RATING */
+
+  .rating-overview {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 20px 0 22px;
+  }
+
+  .rating-number {
+    color: #292929;
+    font-size: 27px;
+    font-weight: 500;
+  }
+
+  .rating-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .rating-stars,
+  .review-stars {
+    color: #a78362;
+    letter-spacing: 2px;
+  }
+
+  .rating-stars {
+    font-size: 14px;
+  }
+
+  .rating-details span {
+    color: #888;
+    font-size: 10px;
+  }
+
+  /* REVIEWS */
+
+  .reviews-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+  }
+
+  .reviews-list {
+    display: flex;
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .reviews-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .review-card {
+    flex: 0 0 280px;
+    min-height: 170px;
+    padding: 18px;
+    box-sizing: border-box;
+
+    background: #e8e0e1;
+    border-radius: 9px;
+
+    scroll-snap-align: start;
+  }
+
+  /* USER */
+
+  .review-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .review-avatar {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #c7b4b8;
+    color: #fff;
+    font-size: 11px;
+  }
+
+  .review-user-info h3 {
+    margin: 0 0 3px;
+    color: #333;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .review-user-info span {
+    color: #888;
+    font-size: 10px;
+  }
+
+  .review-stars {
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .review-text {
+    margin: 0;
+    color: #555;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  /* NEXT BUTTON */
+
+  .reviews-next {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: #a78388;
+    color: #fff;
+    font-size: 23px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .reviews-next:hover {
+    background: #806067;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 900px) {
+    .bewertungen {
+      padding: 30px;
+    }
+
+    .review-card {
+      flex-basis: 260px;
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+    .bewertungen {
+      padding: 30px 16px 45px;
+    }
+
+    .bewertungen-heading h2 {
+      font-size: 23px;
+    }
+
+    .review-card {
+      flex-basis: 250px;
+    }
+
+    .reviews-next {
+      width: 34px;
+      height: 34px;
+    }
+  }
+</style>
