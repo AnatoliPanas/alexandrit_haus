@@ -16,17 +16,25 @@ const offers = [
 ];
 ---
 
-<section class="combination-offers">
+<section class="combination-offers" id="offers">
   <div class="offers-intro">
-    <h2>Лучшие комбинации</h2>
+    <h2>Unsere beliebten Behandlungspakete</h2>
+
     <p>
-      Изучите наши специальные предложения и выберите подходящую комбинацию
-      процедур.
+      Entdecken Sie unsere beliebtesten Kombinationen und finden Sie Ihr
+      passendes Angebot.
     </p>
-    <a href="#booking" class="offers-button">
-      Записаться на приём
+
+    <a
+      href="https://alexandrithaus.sviigo.site"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="offers-button"
+    >
+      Jetzt buchen
     </a>
   </div>
+
   <div class="offers-content">
     <div class="offers-list">
       {offers.map((offer) => (
@@ -34,25 +42,40 @@ const offers = [
           <div class="offer-image">
             <span>Foto</span>
           </div>
+
           <div class="offer-info">
             <h3>{offer.title}</h3>
             <p>{offer.description}</p>
             <span class="offer-price">{offer.price}</span>
           </div>
+
           <a
-            href="#booking"
+            href="https://alexandrithaus.sviigo.site"
+            target="_blank"
+            rel="noopener noreferrer"
             class="offer-arrow"
-            aria-label={`Mehr über ${offer.title}`}
+            aria-label={`Paket ${offer.title} buchen`}
           >
-            →
+            <span class="desktop-arrow">→</span>
+            <span class="mobile-booking">Buchen</span>
           </a>
         </article>
       ))}
     </div>
-    <button class="offers-next" aria-label="Weitere Angebote">
+
+    <button class="offers-next" type="button" aria-label="Weitere Angebote">
       →
     </button>
   </div>
+
+  <a
+    href="https://alexandrithaus.sviigo.site"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="offers-all"
+  >
+    ALLE PAKETE ANSEHEN <span aria-hidden="true">→</span>
+  </a>
 </section>
 <style>
   .combination-offers {
@@ -226,5 +249,171 @@ const offers = [
     color: white;
     font-size: 24px;
     cursor: pointer;
+  }
+
+  /* HIDDEN ON DESKTOP */
+
+  .offers-all,
+  .mobile-booking {
+    display: none;
+  }
+
+  /* MOBILE VERSION */
+
+  @media (max-width: 600px) {
+    .combination-offers {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+
+      padding: 20px 16px;
+      margin: 0;
+
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+
+      background: #f6e7e9;
+    }
+
+    /* HEADER */
+
+    .offers-intro {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .offers-intro h2 {
+      max-width: 250px;
+      margin: 0 0 10px;
+
+      font-size: 23px;
+      font-weight: 500;
+      line-height: 1.15;
+    }
+
+    .offers-intro p,
+    .offers-button {
+      display: none;
+    }
+
+    /* CARDS */
+
+    .offers-content {
+      display: block;
+      width: 100%;
+    }
+
+    .offers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      width: 100%;
+      overflow: visible;
+    }
+
+    .offer-card {
+      position: relative;
+
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+
+      width: 100%;
+      height: 84px;
+      min-height: 84px;
+      flex: none;
+
+      padding: 9px;
+      box-sizing: border-box;
+
+      border-radius: 10px;
+      background: #d8c1c4;
+    }
+
+    .offer-image {
+      width: 58px;
+      height: 58px;
+
+      border-radius: 7px;
+      background: #bca9ad;
+    }
+
+    .offer-info {
+      min-width: 0;
+      padding: 0;
+      gap: 3px;
+    }
+
+    .offer-info h3 {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .offer-info p {
+      display: none;
+    }
+
+    .offer-price {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* BOOKING BUTTON */
+
+    .offer-arrow {
+      position: static;
+
+      width: auto;
+      height: 30px;
+      padding: 0 10px;
+
+      border-radius: 20px;
+      background: #f7eeee;
+      color: #292929;
+
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .desktop-arrow {
+      display: none;
+    }
+
+    .mobile-booking {
+      display: inline;
+    }
+
+    /* HIDE DESKTOP NEXT BUTTON */
+
+    .offers-next {
+      display: none;
+    }
+
+    /* ALL PACKAGES */
+
+    .offers-all {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+
+      width: 100%;
+      padding: 12px 0 2px;
+
+      color: #292929;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      text-decoration: none;
+    }
+
+    .offers-all span {
+      font-size: 20px;
+    }
   }
 </style>
