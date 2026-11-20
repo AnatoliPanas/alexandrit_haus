@@ -1,0 +1,308 @@
+---
+const navigation = [
+  { label: "Behandlungen", href: "#treatments" },
+  { label: "Vorbereitung & Nachsorge", href: "#preparation" },
+  { label: "Ablauf", href: "#procedure" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Bewertungen", href: "#bewertungen" },
+];
+
+const contact = {
+  address: "Adresse wird ergänzt",
+  phone: "",
+  email: "",
+  instagram: "",
+};
+
+const openingHours = [
+  { day: "Montag – Freitag", hours: "Nach Vereinbarung" },
+  { day: "Samstag", hours: "Nach Vereinbarung" },
+  { day: "Sonntag", hours: "Geschlossen" },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer" id="footer">
+  <div class="footer-inner">
+    <div class="footer-main">
+      <!-- LOGO / BRAND -->
+
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          Alexandrit<span>Haus</span>
+        </a>
+
+        <p>
+          Ihr Studio für professionelle Beauty-Behandlungen und individuelle
+          Pflege.
+        </p>
+      </div>
+
+      <!-- NAVIGATION -->
+
+      <div class="footer-column">
+        <h3>Navigation</h3>
+
+        <nav aria-label="Footer Navigation">
+          <ul>
+            {navigation.map((item) => (
+              <li>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      <!-- CONTACT -->
+
+      <div class="footer-column">
+        <h3>Kontakt</h3>
+
+        <address class="footer-contact">
+          <p>{contact.address}</p>
+
+          {contact.phone && (
+            <a href={`tel:${contact.phone.replace(/[\s()-]/g, "")}`}>
+              {contact.phone}
+            </a>
+          )}
+
+          {contact.email && (
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          )}
+
+          {contact.instagram && (
+            <a
+              href={contact.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram ↗
+            </a>
+          )}
+        </address>
+      </div>
+
+      <!-- OPENING HOURS -->
+
+      <div class="footer-column">
+        <h3>Öffnungszeiten</h3>
+
+        <div class="opening-hours">
+          {openingHours.map((item) => (
+            <div class="hours-row">
+              <span>{item.day}</span>
+              <span>{item.hours}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+      <p>© {currentYear} AlexandritHaus. Alle Rechte vorbehalten.</p>
+
+      <div class="footer-legal">
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+    padding: 65px 60px 25px;
+    box-sizing: border-box;
+    background: #e8dfe2;
+    color: #292929;
+  }
+
+  .footer-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  /* MAIN GRID */
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 45px;
+    padding-bottom: 55px;
+  }
+
+  /* BRAND */
+
+  .footer-logo {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #292929;
+    font-size: 27px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+
+  .footer-logo span {
+    color: #a87889;
+  }
+
+  .footer-brand p {
+    max-width: 260px;
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  /* COLUMNS */
+
+  .footer-column h3 {
+    margin: 0 0 22px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #292929;
+  }
+
+  .footer-column ul {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .footer-column a {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-column a:hover {
+    color: #a87889;
+  }
+
+  /* CONTACT */
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    font-style: normal;
+  }
+
+  .footer-contact p {
+    margin: 0;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* OPENING HOURS */
+
+  .opening-hours {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    color: #555;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .hours-row span:last-child {
+    text-align: right;
+  }
+
+  /* BOTTOM */
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-top: 22px;
+    border-top: 1px solid #cdbfc3;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+    color: #777;
+    font-size: 12px;
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 25px;
+  }
+
+  .footer-legal a {
+    color: #666;
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  .footer-legal a:hover {
+    color: #a87889;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 1000px) {
+    .footer {
+      padding: 50px 30px 25px;
+    }
+
+    .footer-main {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px;
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+    .footer {
+      padding: 45px 16px 25px;
+    }
+
+    .footer-main {
+      grid-template-columns: 1fr;
+      gap: 35px;
+      padding-bottom: 35px;
+    }
+
+    .footer-logo {
+      font-size: 25px;
+    }
+
+    .footer-column h3 {
+      margin-bottom: 15px;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .footer-legal {
+      gap: 20px;
+    }
+  }
+</style>
