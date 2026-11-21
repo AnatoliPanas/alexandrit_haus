@@ -1,1 +1,23 @@
 @import "tailwindcss";
+:root {
+  --background: #ffffff;
+  --text-color: #292929;
+  --accent-pink: #ead9df;
+  --card-background: #dedede;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+}
