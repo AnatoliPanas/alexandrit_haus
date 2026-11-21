@@ -69,9 +69,15 @@ const offers = [
       ))}
     </div>
 
-    <button class="offers-next" type="button" aria-label="Weitere Angebote">
-      →
-    </button>
+    <div class="offers-navigation">
+      <button class="offers-prev" type="button" aria-label="Vorherige Angebote">
+        ←
+      </button>
+
+      <button class="offers-next" type="button" aria-label="Weitere Angebote">
+        →
+      </button>
+    </div>
   </div>
 
   <a
@@ -83,6 +89,33 @@ const offers = [
     ALLE PAKETE ANSEHEN <span aria-hidden="true">→</span>
   </a>
 </section>
+
+<script>
+  const section = document.querySelector(".combination-offers");
+  const offersList = section?.querySelector(".offers-list");
+
+  const prevButton = section?.querySelector(".offers-prev");
+  const nextButton = section?.querySelector(".offers-next");
+
+  function scrollOffers(direction: number) {
+    if (!offersList) return;
+
+    const card = offersList.querySelector(".offer-card");
+    if (!card) return;
+
+    const gap = parseFloat(getComputedStyle(offersList).gap) || 0;
+    const scrollAmount = card.getBoundingClientRect().width + gap;
+
+    offersList.scrollBy({
+      left: direction * scrollAmount,
+      behavior: "smooth",
+    });
+  }
+
+  prevButton?.addEventListener("click", () => scrollOffers(-1));
+  nextButton?.addEventListener("click", () => scrollOffers(1));
+</script>
+
 <style>
   .combination-offers {
     width: 100%;
@@ -420,6 +453,36 @@ const offers = [
 
     .offers-all span {
       font-size: 20px;
+    }
+  }
+  .offers-navigation {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .offers-navigation .offers-prev,
+  .offers-navigation .offers-next {
+    position: static;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #292929;
+    border-radius: 50%;
+    background: transparent;
+    color: #292929;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .offers-navigation button:hover {
+    background: #292929;
+    color: #fff;
+  }
+
+  /* На мобільному приховуємо стрілки */
+  @media (max-width: 600px) {
+    .offers-navigation {
+      display: none;
     }
   }
 </style>
