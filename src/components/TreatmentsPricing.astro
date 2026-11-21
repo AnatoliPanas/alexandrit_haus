@@ -1,45 +1,93 @@
 ---
+const bookingUrl = "https://alexandrithaus.sviigo.site";
+
 const categories = [
   {
-    id: "haarentfernung",
-    title: "Haarentfernung",
-    treatments: [
-      { zone: "Oberlippe", duration: "15 Min.", price: "29 €" },
-      { zone: "Kinn", duration: "15 Min.", price: "29 €" },
-      { zone: "Achseln", duration: "30 Min.", price: "49 €" },
-      { zone: "Arme komplett", duration: "45 Min.", price: "79 €" },
-      { zone: "Beine komplett", duration: "60 Min.", price: "99 €" },
-      { zone: "Bikinizone", duration: "30 Min.", price: "59 €" },
+    id: "laser",
+    title: "Laser-Haarentfernung",
+    groups: [
+      {
+        name: "Gesicht",
+        treatments: [
+          { zone: "Oberlippe", duration: "5 Min.", price: "35 €" },
+          { zone: "Kinn", duration: "10 Min.", price: "35 €" },
+          { zone: "Gesicht komplett", duration: "20 Min.", price: "89 €" },
+        ],
+      },
+      {
+        name: "Körper",
+        treatments: [
+          { zone: "Achseln", duration: "10 Min.", price: "50 €" },
+          { zone: "Arme komplett", duration: "25 Min.", price: "100 €" },
+          { zone: "Beine komplett", duration: "35 Min.", price: "150 €" },
+        ],
+      },
+      {
+        name: "Intimbereich",
+        treatments: [
+          { zone: "Bikinizone", duration: "15 Min.", price: "65 €" },
+          { zone: "Intim komplett", duration: "25 Min.", price: "95 €" },
+        ],
+      },
+      {
+        name: "Beine",
+        treatments: [
+          { zone: "Unterschenkel", duration: "20 Min.", price: "90 €" },
+          { zone: "Oberschenkel", duration: "20 Min.", price: "95 €" },
+        ],
+      },
+      {
+        name: "Spezialzonen",
+        treatments: [
+          { zone: "Finger", duration: "5 Min.", price: "25 €" },
+          { zone: "Zehen", duration: "5 Min.", price: "25 €" },
+        ],
+      },
     ],
   },
   {
-    id: "elektro-epilation",
-    title: "Elektro-Epilation",
-    treatments: [
-      { zone: "Kinn", duration: "15 Min.", price: "35 €" },
-      { zone: "Oberlippe", duration: "15 Min.", price: "35 €" },
-      { zone: "Gesicht", duration: "30 Min.", price: "65 €" },
-      { zone: "Körper", duration: "45 Min.", price: "85 €" },
+    id: "electro",
+    title: "Elektroepilation",
+    groups: [
+      {
+        name: "Gesicht",
+        treatments: [
+          { zone: "Oberlippe", duration: "15 Min.", price: "35 €" },
+          { zone: "Kinn", duration: "30 Min.", price: "60 €" },
+        ],
+      },
+      {
+        name: "Körper",
+        treatments: [
+          { zone: "Kleine Zone", duration: "30 Min.", price: "60 €" },
+        ],
+      },
     ],
   },
   {
-    id: "kosmetologie",
+    id: "cosmetic",
     title: "Kosmetologie",
-    treatments: [
-      { zone: "Gesichtsreinigung", duration: "60 Min.", price: "79 €" },
-      { zone: "Hydra Facial", duration: "60 Min.", price: "99 €" },
-      { zone: "Peeling", duration: "45 Min.", price: "69 €" },
-      { zone: "Gesichtsmassage", duration: "30 Min.", price: "49 €" },
+    groups: [
+      {
+        name: "Gesichtsbehandlungen",
+        treatments: [
+          { zone: "Gesichtsreinigung", duration: "60 Min.", price: "79 €" },
+          { zone: "Peeling", duration: "45 Min.", price: "69 €" },
+        ],
+      },
     ],
   },
   {
-    id: "manikuere",
+    id: "manicure",
     title: "Maniküre",
-    treatments: [
-      { zone: "Maniküre klassisch", duration: "45 Min.", price: "39 €" },
-      { zone: "Maniküre mit Lack", duration: "60 Min.", price: "49 €" },
-      { zone: "Gel-Modellage", duration: "90 Min.", price: "69 €" },
-      { zone: "Gel auffüllen", duration: "75 Min.", price: "59 €" },
+    groups: [
+      {
+        name: "Maniküre",
+        treatments: [
+          { zone: "Klassische Maniküre", duration: "45 Min.", price: "39 €" },
+          { zone: "Maniküre mit Lack", duration: "60 Min.", price: "49 €" },
+        ],
+      },
     ],
   },
 ];
@@ -47,12 +95,12 @@ const categories = [
 
 <section class="treatments" id="treatments">
   <div class="treatments-inner">
-    <div class="treatments-header">
-      <h2>Unsere Behandlungen</h2>
-      <p>
-        Entdecken Sie unsere Behandlungen und finden Sie das passende Angebot.
-      </p>
+    <div class="treatments-heading">
+      <h2>Laser-Haarentfernung</h2>
+      <p>Preise & Zonen</p>
     </div>
+
+    <!-- CATEGORY TABS -->
     <div
       class="category-tabs"
       role="tablist"
@@ -60,68 +108,138 @@ const categories = [
     >
       {categories.map((category, index) => (
         <button
-          class:list={["category-tab", { active: index === 0 }]}
           type="button"
+          class:list={["category-tab", { active: index === 0 }]}
+          data-category={category.id}
           role="tab"
           aria-selected={index === 0 ? "true" : "false"}
-          data-category={category.id}
+          aria-controls={`panel-${category.id}`}
+          id={`tab-${category.id}`}
         >
           {category.title}
         </button>
       ))}
     </div>
-    {categories.map((category, index) => (
+
+    <!-- CATEGORY PANELS -->
+    {categories.map((category, categoryIndex) => (
       <div
-        class="treatments-panel"
-        data-panel={category.id}
+        class="category-panel"
+        id={`panel-${category.id}`}
         role="tabpanel"
-        hidden={index !== 0}
+        aria-labelledby={`tab-${category.id}`}
+        data-panel={category.id}
+        hidden={categoryIndex !== 0}
       >
-        <div class="treatments-table">
-          <div class="table-header">
+        <!-- DESKTOP TABLE -->
+        <div class="desktop-table">
+          <div class="table-heading">
             <span>Zone</span>
             <span>Dauer</span>
             <span>Preis</span>
             <span>Buchen</span>
           </div>
 
-          {category.treatments.map((treatment) => (
-            <div class="treatment-row">
-              <span class="treatment-zone">{treatment.zone}</span>
-              <span class="treatment-duration">{treatment.duration}</span>
-              <span class="treatment-price">{treatment.price}</span>
+          {category.groups
+            .flatMap((group) => group.treatments)
+            .map((item) => (
+              <div class="table-row">
+                <span>{item.zone}</span>
+                <span>{item.duration}</span>
+                <span class="price">{item.price}</span>
 
-              <div class="booking-actions">
-                <a href="#" class="booking-button single">
-                  Einzeln
-                </a>
-                <a href="#" class="booking-button package">
-                  Paket
-                </a>
+                <div class="booking-actions">
+                  <a
+                    href={bookingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Einzeln
+                  </a>
+                  <a
+                    href={bookingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Paket
+                  </a>
+                </div>
               </div>
-            </div>
+            ))}
+        </div>
+
+        <!-- MOBILE ACCORDION -->
+        <div class="mobile-groups">
+          {category.groups.map((group, groupIndex) => (
+            <details class="treatment-group" open={groupIndex === 0}>
+              <summary>
+                <span class="group-name">
+                  <span class="group-circle"></span>
+                  {group.name}
+                </span>
+                <span class="group-chevron" aria-hidden="true">
+                  ⌄
+                </span>
+              </summary>
+
+              <div class="group-content">
+                <div class="mobile-table-heading">
+                  <span>Zone</span>
+                  <span>Dauer</span>
+                  <span>Preis</span>
+                </div>
+
+                {group.treatments.map((item) => (
+                  <div class="mobile-treatment-row">
+                    <span>{item.zone}</span>
+                    <span>{item.duration}</span>
+                    <span>{item.price}</span>
+                  </div>
+                ))}
+              </div>
+            </details>
           ))}
         </div>
       </div>
     ))}
+
+    <a
+      class="mobile-booking"
+      href={bookingUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Termin buchen
+    </a>
   </div>
 </section>
+
 <script>
-  const tabs = document.querySelectorAll<HTMLButtonElement>(".category-tab");
-  const panels = document.querySelectorAll<HTMLElement>(".treatments-panel");
+  const treatmentSections =
+    document.querySelectorAll<HTMLElement>(".treatments");
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const selectedCategory = tab.dataset.category;
+  treatmentSections.forEach((section) => {
+    const tabs = section.querySelectorAll<HTMLButtonElement>(".category-tab");
+    const panels = section.querySelectorAll<HTMLElement>(".category-panel");
+    const heading = section.querySelector<HTMLElement>(
+      ".treatments-heading h2",
+    );
 
-      tabs.forEach((item) => {
-        const active = item === tab;
-        item.classList.toggle("active", active);
-        item.setAttribute("aria-selected", String(active));
-      });
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const selected = tab.dataset.category;
 
-      panels.forEach((panel) => {
-        panel.hidden = panel.dataset.panel !== selectedCategory;
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", String(active));
+        });
+
+        panels.forEach((panel) => {
+          panel.hidden = panel.dataset.panel !== selected;
+        });
+
+        if (heading) heading.textContent = tab.textContent?.trim() ?? "";
       });
     });
   });
@@ -130,9 +248,9 @@ const categories = [
 <style>
   .treatments {
     width: 100%;
-    background: #fff;
-    padding: 80px 60px;
+    padding: 60px;
     box-sizing: border-box;
+    background: #fff;
   }
 
   .treatments-inner {
@@ -140,147 +258,94 @@ const categories = [
     margin: 0 auto;
   }
 
-  .treatments-header {
-    margin-bottom: 40px;
-  }
-
-  .treatments-header h2 {
-    margin: 0 0 14px;
-    color: #292929;
-    font-size: 32px;
+  .treatments-heading h2 {
+    margin: 0 0 5px;
+    font-size: 28px;
     font-weight: 500;
+    color: #292929;
   }
 
-  .treatments-header p {
-    margin: 0;
+  .treatments-heading p {
+    margin: 0 0 28px;
+    font-size: 16px;
     color: #777;
-    font-size: 15px;
-    line-height: 1.6;
   }
-
-  /* CATEGORY TABS */
 
   .category-tabs {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
     gap: 12px;
-    margin-bottom: 35px;
-    border-bottom: 1px solid #e8dfe2;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #eee;
   }
 
   .category-tab {
-    position: relative;
-    padding: 18px 10px;
+    flex: 1;
+    padding: 15px 10px;
     border: none;
     background: transparent;
     color: #777;
-    font-family: inherit;
-    font-size: 15px;
+    font: inherit;
+    font-size: 14px;
     cursor: pointer;
-    transition: color 0.2s;
-  }
-
-  .category-tab:hover,
-  .category-tab.active {
-    color: #a66f83;
   }
 
   .category-tab.active {
-    font-weight: 600;
+    color: #a87889;
+    border-bottom: 2px solid #a87889;
   }
 
-  .category-tab.active::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: #b78396;
+  .category-panel[hidden] {
+    display: none !important;
   }
 
-  /* TABLE */
+  /* DESKTOP TABLE */
 
-  .table-header,
-  .treatment-row {
+  .table-heading,
+  .table-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 0.8fr 1.5fr;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
     align-items: center;
     gap: 20px;
   }
 
-  .table-header {
-    padding: 16px 20px;
-    color: #888;
+  .table-heading {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
     font-size: 13px;
-    font-weight: 600;
-    border-bottom: 1px solid #e8dfe2;
-  }
-
-  .treatment-row {
-    min-height: 78px;
-    padding: 14px 20px;
-    border-bottom: 1px solid #eee7e9;
-    transition: background 0.2s;
-  }
-
-  .treatment-row:hover {
-    background: #faf6f7;
-  }
-
-  .treatment-zone {
-    color: #333;
-    font-size: 15px;
-    font-weight: 500;
-  }
-
-  .treatment-duration {
     color: #777;
+  }
+
+  .table-row {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
     font-size: 14px;
   }
 
-  .treatment-price {
-    color: #333;
-    font-size: 15px;
+  .price {
     font-weight: 600;
   }
-
-  /* BOOKING BUTTONS */
 
   .booking-actions {
     display: flex;
     gap: 8px;
-    justify-content: flex-start;
   }
 
-  .booking-button {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 75px;
-    padding: 10px 15px;
+  .booking-actions a {
+    padding: 9px 14px;
     border-radius: 25px;
+    background: #ead9df;
+    color: #292929;
     font-size: 12px;
     text-decoration: none;
-    transition: 0.2s;
   }
 
-  .booking-button.single {
+  .booking-actions a:first-child {
     background: #292929;
-    color: #fff;
+    color: white;
   }
 
-  .booking-button.package {
-    background: #ead9df;
-    color: #704858;
-  }
-
-  .booking-button:hover {
-    opacity: 0.8;
-    transform: translateY(-1px);
-  }
-
-  .treatments-panel[hidden] {
+  .mobile-groups,
+  .mobile-booking {
     display: none;
   }
 
@@ -288,18 +353,12 @@ const categories = [
 
   @media (max-width: 900px) {
     .treatments {
-      padding: 60px 30px;
+      padding: 40px 30px;
     }
 
-    .table-header,
-    .treatment-row {
-      grid-template-columns: 1.5fr 0.8fr 0.7fr 1.5fr;
+    .table-heading,
+    .table-row {
       gap: 10px;
-    }
-
-    .booking-button {
-      min-width: 60px;
-      padding: 9px 10px;
     }
   }
 
@@ -307,57 +366,141 @@ const categories = [
 
   @media (max-width: 600px) {
     .treatments {
-      padding: 45px 16px;
+      padding: 25px 12px;
+      background: #fbe9eb;
     }
 
-    .treatments-header h2 {
-      font-size: 25px;
+    .treatments-heading h2 {
+      font-size: 23px;
+    }
+
+    .treatments-heading p {
+      margin-bottom: 15px;
+      font-size: 18px;
+      color: #292929;
     }
 
     .category-tabs {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0;
+      gap: 5px;
+      margin-bottom: 18px;
+      padding-bottom: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
 
-    .category-tab {
-      padding: 15px 5px;
-      font-size: 13px;
-    }
-
-    .table-header {
+    .category-tabs::-webkit-scrollbar {
       display: none;
     }
 
-    .treatment-row {
-      grid-template-columns: 1fr auto;
-      gap: 8px;
-      padding: 18px 5px;
-    }
-
-    .treatment-zone {
-      grid-column: 1;
-    }
-
-    .treatment-duration {
-      grid-column: 1;
-      grid-row: 2;
+    .category-tab {
+      flex: 0 0 auto;
+      padding: 9px 14px;
+      border-radius: 20px;
+      background: #dfc9cd;
       font-size: 12px;
+      white-space: nowrap;
     }
 
-    .treatment-price {
-      grid-column: 2;
-      grid-row: 1;
+    .category-tab.active {
+      background: #b9a3a8;
+      border-bottom: none;
+      color: #fff;
+    }
+
+    .desktop-table {
+      display: none;
+    }
+
+    .mobile-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .treatment-group {
+      overflow: hidden;
+      border-radius: 12px;
+      background: #ead4d8;
+    }
+
+    .treatment-group summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 42px;
+      padding: 9px 12px;
+      list-style: none;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .treatment-group summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .group-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .group-circle {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #f8e9ec;
+      flex-shrink: 0;
+    }
+
+    .group-chevron {
+      font-size: 20px;
+      transition: transform 0.2s;
+    }
+
+    .treatment-group[open] .group-chevron {
+      transform: rotate(180deg);
+    }
+
+    .group-content {
+      padding: 5px 12px 15px 36px;
+    }
+
+    .mobile-table-heading,
+    .mobile-treatment-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 0.8fr;
+      gap: 6px;
+    }
+
+    .mobile-table-heading {
+      margin-bottom: 10px;
+      color: #999;
+      font-size: 10px;
+    }
+
+    .mobile-treatment-row {
+      padding: 5px 0;
+      font-size: 11px;
+      color: #333;
+    }
+
+    .mobile-treatment-row span:last-child {
       text-align: right;
+      font-weight: 600;
     }
 
-    .booking-actions {
-      grid-column: 1 / -1;
-      grid-row: 3;
-      margin-top: 8px;
-    }
-
-    .booking-button {
-      flex: 1;
+    .mobile-booking {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      padding: 13px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background: #c5a8ae;
+      color: #292929;
+      text-align: center;
+      font-size: 13px;
+      text-decoration: none;
     }
   }
 </style>
