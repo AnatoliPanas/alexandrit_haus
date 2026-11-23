@@ -49,12 +49,19 @@ const afterLaser = [
     image: "sport",
   },
 ];
+
+const beforeAll = [...beforeLong, ...beforeAppointment];
 ---
 
 <section class="preparation" id="preparation">
   <div class="preparation-inner">
     <div class="section-heading">
-      <h2>Vorbereitung & Nachsorge</h2>
+      <span class="section-eyebrow">VORBEREITUNG & NACHSORGE</span>
+      <h2>
+        Für ein sicheres
+        <br />
+        und optimales Ergebnis
+      </h2>
       <p>
         Für ein optimales Behandlungsergebnis beachten Sie bitte unsere
         Empfehlungen vor und nach der Laserbehandlung.
@@ -62,81 +69,117 @@ const afterLaser = [
     </div>
 
     <div class="preparation-columns">
-      <!-- LEFT: BEFORE LASER -->
-
+      <!-- BEFORE LASER -->
       <div class="preparation-column">
         <div class="column-heading">
           <span class="column-number">01</span>
-          <h3>Vor dem Laser</h3>
-        </div>
-
-        <div class="recommendation-group">
-          <h4>3–4 Wochen vor der Behandlung</h4>
-
-          <div class="recommendation-grid">
-            {beforeLong.map((item) => (
-              <article class="recommendation-card">
-                <div class="recommendation-image">
-                  <div class={`image-placeholder ${item.image}`}>
-                    <span>Foto</span>
-                  </div>
-                </div>
-                <div class="recommendation-info">
-                  <h5>{item.title}</h5>
-                  <p>{item.description}</p>
-                </div>
-              </article>
-            ))}
+          <div>
+            <h3>Vor dem Laser</h3>
+            <p>3–4 Wochen vor der Behandlung</p>
           </div>
         </div>
 
-        <div class="recommendation-group">
-          <h4>Kurz vor Ihrem Termin</h4>
+        <!-- DESKTOP -->
+        <div class="desktop-recommendations">
+          <div class="recommendation-group">
+            <h4>3–4 Wochen vor der Behandlung</h4>
 
-          <div class="recommendation-grid">
-            {beforeAppointment.map((item) => (
-              <article class="recommendation-card">
-                <div class="recommendation-image">
-                  <div class={`image-placeholder ${item.image}`}>
-                    <span>Foto</span>
+            <div class="recommendation-grid">
+              {beforeLong.map((item) => (
+                <article class="recommendation-card">
+                  <div class="recommendation-image">
+                    <div class={`image-placeholder ${item.image}`}>
+                      <span>Foto</span>
+                    </div>
                   </div>
-                </div>
-                <div class="recommendation-info">
-                  <h5>{item.title}</h5>
-                  <p>{item.description}</p>
-                </div>
-              </article>
-            ))}
+                  <div class="recommendation-info">
+                    <h5>{item.title}</h5>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
+
+          <div class="recommendation-group">
+            <h4>Kurz vor Ihrem Termin</h4>
+
+            <div class="recommendation-grid">
+              {beforeAppointment.map((item) => (
+                <article class="recommendation-card">
+                  <div class="recommendation-image">
+                    <div class={`image-placeholder ${item.image}`}>
+                      <span>Foto</span>
+                    </div>
+                  </div>
+                  <div class="recommendation-info">
+                    <h5>{item.title}</h5>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="mobile-recommendations">
+          {beforeAll.map((item) => (
+            <article class="mobile-recommendation">
+              <div class={`mobile-image ${item.image}`}></div>
+              <div class="mobile-info">
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
 
-      <!-- RIGHT: AFTER LASER -->
-
+      <!-- AFTER LASER -->
       <div class="preparation-column after-column">
         <div class="column-heading">
           <span class="column-number">02</span>
-          <h3>Nach dem Laser</h3>
+          <div>
+            <h3>Nach dem Laser</h3>
+            <p>Erste 24–48 Stunden</p>
+          </div>
         </div>
 
-        <div class="recommendation-group">
-          <h4>Erste 24–48 Stunden</h4>
+        <!-- DESKTOP -->
+        <div class="desktop-recommendations">
+          <div class="recommendation-group">
+            <h4>Erste 24–48 Stunden</h4>
 
-          <div class="recommendation-grid">
-            {afterLaser.map((item) => (
-              <article class="recommendation-card">
-                <div class="recommendation-image">
-                  <div class={`image-placeholder ${item.image}`}>
-                    <span>Foto</span>
+            <div class="recommendation-grid">
+              {afterLaser.map((item) => (
+                <article class="recommendation-card">
+                  <div class="recommendation-image">
+                    <div class={`image-placeholder ${item.image}`}>
+                      <span>Foto</span>
+                    </div>
                   </div>
-                </div>
-                <div class="recommendation-info">
-                  <h5>{item.title}</h5>
-                  <p>{item.description}</p>
-                </div>
-              </article>
-            ))}
+                  <div class="recommendation-info">
+                    <h5>{item.title}</h5>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="mobile-recommendations">
+          {afterLaser.map((item) => (
+            <article class="mobile-recommendation">
+              <div class={`mobile-image ${item.image}`}></div>
+              <div class="mobile-info">
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </div>
@@ -144,6 +187,10 @@ const afterLaser = [
 </section>
 
 <style>
+  /* =====================
+     DESKTOP
+     ===================== */
+
   .preparation {
     width: 100%;
     padding: 80px 60px;
@@ -156,10 +203,12 @@ const afterLaser = [
     margin: 0 auto;
   }
 
-  /* SECTION HEADING */
-
   .section-heading {
     margin-bottom: 45px;
+  }
+
+  .section-eyebrow {
+    display: none;
   }
 
   .section-heading h2 {
@@ -169,6 +218,10 @@ const afterLaser = [
     color: #292929;
   }
 
+  .section-heading h2 br {
+    display: none;
+  }
+
   .section-heading p {
     max-width: 600px;
     margin: 0;
@@ -176,8 +229,6 @@ const afterLaser = [
     font-size: 15px;
     line-height: 1.6;
   }
-
-  /* TWO COLUMNS */
 
   .preparation-columns {
     display: grid;
@@ -196,8 +247,6 @@ const afterLaser = [
   .after-column {
     background: #f1e7e9;
   }
-
-  /* COLUMN HEADING */
 
   .column-heading {
     display: flex;
@@ -228,7 +277,9 @@ const afterLaser = [
     color: #292929;
   }
 
-  /* RECOMMENDATION GROUP */
+  .column-heading > div > p {
+    display: none;
+  }
 
   .recommendation-group {
     margin-bottom: 35px;
@@ -244,8 +295,6 @@ const afterLaser = [
     font-weight: 600;
     color: #444;
   }
-
-  /* CARDS */
 
   .recommendation-grid {
     display: grid;
@@ -266,8 +315,6 @@ const afterLaser = [
     overflow: hidden;
   }
 
-  /* IMAGE PLACEHOLDERS */
-
   .image-placeholder {
     width: 100%;
     height: 100%;
@@ -284,32 +331,43 @@ const afterLaser = [
     transform: scale(1.04);
   }
 
-  .image-placeholder span {
-    position: relative;
-  }
-
-  .image-placeholder.sun {
+  .image-placeholder.sun,
+  .mobile-image.sun {
     background: #eee3d5;
   }
-  .image-placeholder.skin {
+
+  .image-placeholder.skin,
+  .mobile-image.skin {
     background: #eadbd5;
   }
-  .image-placeholder.razor {
+
+  .image-placeholder.razor,
+  .mobile-image.razor {
     background: #e4dce0;
   }
-  .image-placeholder.clean {
+
+  .image-placeholder.clean,
+  .mobile-image.clean {
     background: #e5e8e3;
   }
-  .image-placeholder.heat {
+
+  .image-placeholder.heat,
+  .mobile-image.heat {
     background: #eadbd7;
   }
-  .image-placeholder.spf {
+
+  .image-placeholder.spf,
+  .mobile-image.spf {
     background: #eee5d6;
   }
-  .image-placeholder.care {
+
+  .image-placeholder.care,
+  .mobile-image.care {
     background: #e1e8e1;
   }
-  .image-placeholder.sport {
+
+  .image-placeholder.sport,
+  .mobile-image.sport {
     background: #e3e0e8;
   }
 
@@ -332,7 +390,13 @@ const afterLaser = [
     line-height: 1.6;
   }
 
-  /* TABLET */
+  .mobile-recommendations {
+    display: none;
+  }
+
+  /* =====================
+     TABLET
+     ===================== */
 
   @media (max-width: 1000px) {
     .preparation {
@@ -356,42 +420,141 @@ const afterLaser = [
     }
   }
 
-  /* MOBILE */
+  /* =====================
+     MOBILE — FIGMA
+     ===================== */
 
   @media (max-width: 700px) {
     .preparation {
-      padding: 45px 16px;
+      padding: 20px 10px 24px;
+      background: #fff;
+    }
+
+    .preparation-inner {
+      max-width: 100%;
+    }
+
+    /* TITLE */
+
+    .section-heading {
+      margin-bottom: 14px;
+    }
+
+    .section-eyebrow {
+      display: block;
+      margin-bottom: 3px;
+      color: #805665;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
     .section-heading h2 {
-      font-size: 26px;
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.08;
+      font-weight: 600;
     }
+
+    .section-heading h2 br {
+      display: initial;
+    }
+
+    .section-heading p {
+      display: none;
+    }
+
+    /* TWO VERTICAL BLOCKS */
 
     .preparation-columns {
-      grid-template-columns: 1fr;
-      gap: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .preparation-column {
-      padding: 20px;
+    .preparation-column,
+    .after-column {
+      width: 100%;
+      padding: 12px 10px;
+      background: #f0dfe2;
+      border-radius: 8px;
+    }
+
+    /* BLOCK HEADINGS */
+
+    .column-heading {
+      gap: 10px;
+      padding: 0;
+      margin-bottom: 12px;
+      border: none;
+    }
+
+    .column-number {
+      width: 22px;
+      height: 22px;
+      font-size: 9px;
+      background: #ddc2c9;
     }
 
     .column-heading h3 {
-      font-size: 21px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.2;
     }
 
-    .recommendation-image {
-      height: 135px;
-    }
-  }
-
-  @media (max-width: 380px) {
-    .recommendation-grid {
-      grid-template-columns: 1fr;
+    .column-heading > div > p {
+      display: block;
+      margin: 3px 0 0;
+      font-size: 9px;
+      color: #777;
     }
 
-    .recommendation-image {
-      height: 170px;
+    /* HIDE DESKTOP CARDS */
+
+    .desktop-recommendations {
+      display: none;
+    }
+
+    /* MOBILE RECOMMENDATIONS */
+
+    .mobile-recommendations {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-recommendation {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+    }
+
+    .mobile-image {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 50%;
+    }
+
+    .mobile-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .mobile-info h4 {
+      margin: 0 0 3px;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #292929;
+    }
+
+    .mobile-info p {
+      margin: 0;
+      font-size: 9px;
+      line-height: 1.35;
+      color: #666;
     }
   }
 </style>
