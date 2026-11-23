@@ -29,7 +29,19 @@ const steps = [
 
 <section class="procedure-steps" id="procedure">
   <div class="procedure-inner">
-    <h2>Wie läuft die Prozedur ab?</h2>
+    <div class="procedure-heading">
+      <span class="procedure-eyebrow">DER ABLAUF</span>
+
+      <h2>
+        <span class="desktop-title">Wie läuft die Prozedur ab?</span>
+        <span class="mobile-title">
+          So läuft Ihre
+          <br />
+          Behandlung ab
+        </span>
+      </h2>
+    </div>
+
     <div class="steps-grid">
       {steps.map((step, index) => (
         <article class="step">
@@ -60,12 +72,17 @@ const steps = [
     </div>
   </div>
 </section>
+
 <style>
+  /* =========================
+     DESKTOP
+     ========================= */
+
   .procedure-steps {
     width: 100%;
     padding: 25px 60px 35px;
     box-sizing: border-box;
-    background: #fff;
+    background: #ffffff;
   }
 
   .procedure-inner {
@@ -73,12 +90,29 @@ const steps = [
     margin: 0 auto;
   }
 
+  /* HEADING */
+
+  .procedure-heading {
+    margin-bottom: 32px;
+  }
+
   .procedure-inner h2 {
-    margin: 0 0 32px;
+    margin: 0;
     color: #292929;
     font-size: 26px;
     font-weight: 500;
   }
+
+  .procedure-eyebrow,
+  .mobile-title {
+    display: none;
+  }
+
+  .desktop-title {
+    display: inline;
+  }
+
+  /* STEPS GRID */
 
   .steps-grid {
     display: grid;
@@ -97,6 +131,8 @@ const steps = [
     margin-bottom: 12px;
   }
 
+  /* NUMBER CIRCLE */
+
   .step-number {
     width: 44px;
     height: 44px;
@@ -109,9 +145,12 @@ const steps = [
     border-radius: 50%;
     background: #dedede;
     color: #292929;
+
     font-size: 13px;
     font-weight: 500;
   }
+
+  /* DESKTOP ARROWS */
 
   .step-arrow {
     display: flex;
@@ -130,6 +169,8 @@ const steps = [
     overflow: visible;
   }
 
+  /* STEP TEXT */
+
   .step h3 {
     margin: 0 0 10px;
     color: #292929;
@@ -140,12 +181,14 @@ const steps = [
   .step p {
     max-width: 230px;
     margin: 0;
-    color: #555;
+    color: #555555;
     font-size: 12px;
     line-height: 1.5;
   }
 
-  /* TABLET */
+  /* =========================
+     TABLET
+     ========================= */
 
   @media (max-width: 900px) {
     .procedure-steps {
@@ -161,25 +204,197 @@ const steps = [
     }
   }
 
-  /* MOBILE */
+  /* =========================
+     MOBILE — FIGMA
+     ========================= */
 
   @media (max-width: 600px) {
     .procedure-steps {
-      padding: 35px 16px;
+      width: 100%;
+      padding: 16px 10px 20px;
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+
+    .procedure-inner {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* MOBILE HEADING */
+
+    .procedure-heading {
+      margin-bottom: 14px;
+    }
+
+    .procedure-eyebrow {
+      display: block;
+      margin-bottom: 3px;
+
+      color: #805665;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
     }
 
     .procedure-inner h2 {
+      margin: 0;
       font-size: 23px;
+      font-weight: 600;
+      line-height: 1.08;
     }
 
-    .steps-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      row-gap: 30px;
-      column-gap: 20px;
+    .desktop-title {
+      display: none;
     }
+
+    .mobile-title {
+      display: inline;
+    }
+
+    /* VERTICAL TIMELINE */
+
+    .steps-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .step {
+      position: relative;
+
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: 12px;
+      align-content: start;
+
+      min-height: 75px;
+      padding: 0 0 12px;
+    }
+
+    /* CONNECTING LINE */
+
+    .step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+
+      top: 32px;
+      bottom: 0;
+      left: 28px;
+
+      width: 2px;
+      background: #d7bdc3;
+      z-index: 0;
+    }
+
+    /* NUMBER CIRCLE */
+
+    .step-visual {
+      grid-column: 1;
+      grid-row: 1 / 3;
+
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      width: 58px;
+      margin: 0;
+
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+
+      border-radius: 50%;
+      background: #e5cdd2;
+      color: #7e6670;
+
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* HIDE DESKTOP ARROWS */
 
     .step-arrow {
       display: none;
+    }
+
+    /* STEP TITLE */
+
+    .step h3 {
+      grid-column: 2;
+      grid-row: 1;
+
+      margin: 4px 0 4px;
+
+      color: #292929;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    /* STEP DESCRIPTION */
+
+    .step p {
+      grid-column: 2;
+      grid-row: 2;
+
+      max-width: 100%;
+      margin: 0;
+
+      color: #555555;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    /* LAST STEP */
+
+    .step:last-child {
+      min-height: 48px;
+      padding-bottom: 0;
+    }
+  }
+
+  /* =========================
+     SMALL MOBILE
+     ========================= */
+
+  @media (max-width: 380px) {
+    .procedure-inner h2 {
+      font-size: 21px;
+    }
+
+    .step {
+      grid-template-columns: 48px minmax(0, 1fr);
+      column-gap: 8px;
+    }
+
+    .step-visual {
+      width: 48px;
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+    }
+
+    .step:not(:last-child)::after {
+      left: 23px;
+      top: 30px;
+    }
+
+    .step h3 {
+      font-size: 12px;
+    }
+
+    .step p {
+      font-size: 10px;
     }
   }
 </style>
