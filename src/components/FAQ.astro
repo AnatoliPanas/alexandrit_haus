@@ -28,10 +28,10 @@ const questions = [
     <h2>FAQ</h2>
 
     <div class="faq-list">
-      {questions.map((item, index) => (
+      {questions.map((item) => (
         <details class="faq-item">
           <summary>
-            <span>{item.question}</span>
+            <span class="faq-question">{item.question}</span>
 
             <span class="faq-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -55,17 +55,23 @@ const questions = [
 </section>
 
 <style>
+  /* =========================
+     DESKTOP
+     ========================= */
+
   .faq-section {
     width: 100%;
     padding: 25px 60px 80px;
     box-sizing: border-box;
-    background: #fff;
+    background: #ffffff;
   }
 
   .faq-inner {
     max-width: 1320px;
     margin: 0 auto;
   }
+
+  /* HEADING */
 
   .faq-inner h2 {
     margin: 0 0 20px;
@@ -74,11 +80,15 @@ const questions = [
     font-weight: 500;
   }
 
+  /* FAQ LIST */
+
   .faq-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
+
+  /* FAQ ITEM */
 
   .faq-item {
     width: 100%;
@@ -93,6 +103,8 @@ const questions = [
     border-radius: 20px;
   }
 
+  /* QUESTION */
+
   .faq-item summary {
     min-height: 44px;
     padding: 12px 20px;
@@ -106,6 +118,7 @@ const questions = [
     color: #292929;
     font-size: 14px;
     font-weight: 500;
+
     cursor: pointer;
     list-style: none;
   }
@@ -114,13 +127,26 @@ const questions = [
     display: none;
   }
 
+  .faq-item summary::marker {
+    content: "";
+  }
+
+  .faq-question {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* PLUS ICON */
+
   .faq-icon {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     transition: transform 0.2s;
   }
 
@@ -133,6 +159,8 @@ const questions = [
     transform: rotate(45deg);
   }
 
+  /* ANSWER */
+
   .faq-answer {
     padding: 0 50px 18px 20px;
   }
@@ -140,12 +168,22 @@ const questions = [
   .faq-answer p {
     max-width: 800px;
     margin: 0;
-    color: #666;
+    color: #666666;
     font-size: 13px;
     line-height: 1.7;
   }
 
-  /* TABLET */
+  /* KEYBOARD ACCESSIBILITY */
+
+  .faq-item summary:focus-visible {
+    outline: 2px solid #805665;
+    outline-offset: -3px;
+    border-radius: inherit;
+  }
+
+  /* =========================
+     TABLET
+     ========================= */
 
   @media (max-width: 900px) {
     .faq-section {
@@ -153,24 +191,116 @@ const questions = [
     }
   }
 
-  /* MOBILE */
+  /* =========================
+     MOBILE — FIGMA
+     ========================= */
 
   @media (max-width: 600px) {
     .faq-section {
-      padding: 25px 16px 50px;
+      width: 100%;
+      padding: 18px 10px 28px;
+      background: #ffffff;
     }
 
+    .faq-inner {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* HEADING */
+
     .faq-inner h2 {
+      margin: 0 0 12px;
       font-size: 23px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    /* FAQ LIST */
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* PINK ROUNDED ITEMS */
+
+    .faq-item {
+      width: 100%;
+      border-radius: 22px;
+      background: #e6d0d5;
+    }
+
+    .faq-item[open] {
+      border-radius: 16px;
+      background: #f0dfe2;
+    }
+
+    /* QUESTION */
+
+    .faq-item summary {
+      min-height: 42px;
+      padding: 11px 14px;
+
+      gap: 10px;
+
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .faq-question {
+      flex: 1;
+    }
+
+    /* ICON */
+
+    .faq-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .faq-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ANSWER */
+
+    .faq-answer {
+      padding: 0 14px 14px;
+    }
+
+    .faq-answer p {
+      max-width: 100%;
+      font-size: 11px;
+      line-height: 1.55;
+      color: #555555;
+    }
+  }
+
+  /* =========================
+     SMALL PHONES
+     ========================= */
+
+  @media (max-width: 380px) {
+    .faq-section {
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
     .faq-item summary {
-      font-size: 13px;
-      padding: 12px 16px;
+      padding: 10px 12px;
+      font-size: 10px;
     }
 
     .faq-answer {
-      padding: 0 16px 16px;
+      padding: 0 12px 12px;
+    }
+
+    .faq-answer p {
+      font-size: 10px;
     }
   }
 </style>
