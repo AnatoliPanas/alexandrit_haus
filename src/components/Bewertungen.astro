@@ -31,39 +31,47 @@ const reviews = [
     text: "Ich habe mich sehr gut aufgehoben gefühlt. Freundliche Beratung und eine angenehme Behandlung.",
   },
 ];
+
+// TODO: Replace with verified Google reviews and rating.
+const rating = "5,0";
+const reviewCount = "";
+const reviewsUrl = "";
 ---
 
 <section class="bewertungen" id="bewertungen">
   <div class="bewertungen-inner">
     <div class="bewertungen-heading">
-      <div>
-        <h2>Bewertungen</h2>
-        <p>Das sagen unsere Kundinnen</p>
-      </div>
+      <h2>Bewertungen</h2>
+      <p>Das sagen unsere Kundinnen</p>
     </div>
 
     <div class="rating-overview">
-      <span class="rating-number">5.0</span>
+      <span class="rating-number">{rating}</span>
 
       <div class="rating-details">
         <div class="rating-stars" aria-label="5 von 5 Sternen">
           ★★★★★
         </div>
-        <span>Unsere Kundinnen bewerten uns</span>
+
+        <span>
+          {reviewCount
+            ? `${reviewCount} Bewertungen auf Google`
+            : "Beispielbewertung"}
+        </span>
       </div>
     </div>
 
     <div class="reviews-wrapper">
       <button
-        class="reviews-arrow"
-        id="reviews-prev"
+        class="reviews-arrow reviews-prev"
         type="button"
         aria-label="Vorherige Bewertungen"
+        disabled
       >
         ←
       </button>
 
-      <div class="reviews-list" id="reviews-list">
+      <div class="reviews-list" tabindex="0" aria-label="Kundenbewertungen">
         {reviews.map((review) => (
           <article class="review-card">
             <div class="review-user">
@@ -75,7 +83,9 @@ const reviews = [
               </div>
             </div>
 
-            <div class="review-stars">★★★★★</div>
+            <div class="review-stars" aria-label="5 von 5 Sternen">
+              ★★★★★
+            </div>
 
             <p class="review-text">{review.text}</p>
           </article>
@@ -83,43 +93,80 @@ const reviews = [
       </div>
 
       <button
-        class="reviews-arrow"
-        id="reviews-next"
+        class="reviews-arrow reviews-next"
         type="button"
         aria-label="Weitere Bewertungen"
       >
         →
       </button>
     </div>
+
+    {reviewsUrl ? (
+      <a
+        href={reviewsUrl}
+        class="reviews-all"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Alle Bewertungen ansehen
+        <span aria-hidden="true">→</span>
+      </a>
+    ) : (
+      <span class="reviews-all reviews-all-placeholder">
+        Alle Bewertungen ansehen
+        <span aria-hidden="true">→</span>
+      </span>
+    )}
   </div>
 </section>
 
 <script>
-  const reviewsList = document.querySelector<HTMLElement>("#reviews-list");
-  const nextButton = document.querySelector<HTMLButtonElement>("#reviews-next");
-  const prevButton = document.querySelector<HTMLButtonElement>("#reviews-prev");
+  document.querySelectorAll<HTMLElement>(".bewertungen").forEach((section) => {
+    const list = section.querySelector<HTMLElement>(".reviews-list");
+    const prev = section.querySelector<HTMLButtonElement>(".reviews-prev");
+    const next = section.querySelector<HTMLButtonElement>(".reviews-next");
 
-  nextButton?.addEventListener("click", () => {
-    reviewsList?.scrollBy({
-      left: reviewsList.clientWidth * 0.7,
-      behavior: "smooth",
-    });
-  });
+    if (!list || !prev || !next) return;
 
-  prevButton?.addEventListener("click", () => {
-    reviewsList?.scrollBy({
-      left: -reviewsList.clientWidth * 0.7,
-      behavior: "smooth",
-    });
+    const updateButtons = () => {
+      const maxScroll = Math.max(0, list.scrollWidth - list.clientWidth);
+
+      prev.disabled = list.scrollLeft <= 2;
+      next.disabled = list.scrollLeft >= maxScroll - 2;
+    };
+
+    const scrollReviews = (direction: number) => {
+      const card = list.querySelector<HTMLElement>(".review-card");
+      if (!card) return;
+
+      const gap = parseFloat(getComputedStyle(list).columnGap) || 0;
+
+      list.scrollBy({
+        left: direction * (card.getBoundingClientRect().width + gap),
+        behavior: "smooth",
+      });
+    };
+
+    prev.addEventListener("click", () => scrollReviews(-1));
+    next.addEventListener("click", () => scrollReviews(1));
+
+    list.addEventListener("scroll", updateButtons, { passive: true });
+    window.addEventListener("resize", updateButtons);
+
+    updateButtons();
   });
 </script>
 
 <style>
+  /* =========================
+     DESKTOP
+     ========================= */
+
   .bewertungen {
     width: 100%;
     padding: 35px 60px 60px;
     box-sizing: border-box;
-    background: #fff;
+    background: #ffffff;
   }
 
   .bewertungen-inner {
@@ -138,7 +185,7 @@ const reviews = [
 
   .bewertungen-heading p {
     margin: 0;
-    color: #777;
+    color: #777777;
     font-size: 14px;
   }
 
@@ -174,11 +221,11 @@ const reviews = [
   }
 
   .rating-details span {
-    color: #888;
+    color: #888888;
     font-size: 10px;
   }
 
-  /* REVIEWS */
+  /* CAROUSEL */
 
   .reviews-wrapper {
     position: relative;
@@ -191,17 +238,24 @@ const reviews = [
   .reviews-list {
     display: flex;
     gap: 18px;
+
     width: 100%;
     min-width: 0;
+
     overflow-x: auto;
+    overflow-y: hidden;
+
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    overscroll-behavior-x: contain;
   }
 
   .reviews-list::-webkit-scrollbar {
     display: none;
   }
+
+  /* REVIEW CARD */
 
   .review-card {
     flex: 0 0 280px;
@@ -235,19 +289,23 @@ const reviews = [
 
     border-radius: 50%;
     background: #c7b4b8;
-    color: #fff;
+    color: #ffffff;
     font-size: 11px;
+  }
+
+  .review-user-info {
+    min-width: 0;
   }
 
   .review-user-info h3 {
     margin: 0 0 3px;
-    color: #333;
+    color: #333333;
     font-size: 12px;
     font-weight: 600;
   }
 
   .review-user-info span {
-    color: #888;
+    color: #888888;
     font-size: 10px;
   }
 
@@ -258,36 +316,81 @@ const reviews = [
 
   .review-text {
     margin: 0;
-    color: #555;
+    color: #555555;
     font-size: 11px;
     line-height: 1.6;
+    overflow-wrap: break-word;
   }
 
-  /* NEXT BUTTON */
+  /* ARROWS */
 
-  .reviews-next {
+  .reviews-arrow {
     width: 40px;
     height: 40px;
-    flex-shrink: 0;
+    flex: 0 0 40px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    padding: 0;
     border: none;
     border-radius: 50%;
+
     background: #a78388;
-    color: #fff;
+    color: #ffffff;
     font-size: 23px;
+
     cursor: pointer;
-    transition: background 0.2s;
+    transition:
+      background 0.2s,
+      opacity 0.2s;
   }
 
-  .reviews-next:hover {
+  .reviews-arrow:hover:not(:disabled) {
     background: #806067;
   }
 
-  /* TABLET */
+  .reviews-arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .reviews-arrow:focus-visible,
+  .reviews-list:focus-visible {
+    outline: 2px solid #805665;
+    outline-offset: 3px;
+  }
+
+  /* ALL REVIEWS LINK */
+
+  .reviews-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: fit-content;
+    margin: 22px auto 0;
+
+    color: #292929;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .reviews-all span {
+    font-size: 19px;
+  }
+
+  .reviews-all-placeholder {
+    color: #777777;
+    cursor: default;
+  }
+
+  /* =========================
+     TABLET
+     ========================= */
 
   @media (max-width: 900px) {
     .bewertungen {
@@ -297,26 +400,180 @@ const reviews = [
     .review-card {
       flex-basis: 260px;
     }
+
+    .reviews-wrapper {
+      gap: 10px;
+    }
   }
 
-  /* MOBILE */
+  /* =========================
+     MOBILE — FIGMA
+     ========================= */
 
   @media (max-width: 600px) {
     .bewertungen {
-      padding: 30px 16px 45px;
+      width: 100%;
+      padding: 20px 10px 30px;
+      background: #ffffff;
     }
+
+    .bewertungen-inner {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* HEADING */
 
     .bewertungen-heading h2 {
-      font-size: 23px;
+      margin-bottom: 3px;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #805665;
     }
 
+    .bewertungen-heading p {
+      max-width: 260px;
+      color: #292929;
+      font-size: 23px;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    /* RATING */
+
+    .rating-overview {
+      gap: 8px;
+      margin: 12px 0 15px;
+    }
+
+    .rating-number {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .rating-stars {
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .rating-details span {
+      font-size: 9px;
+    }
+
+    /* CAROUSEL */
+
+    .reviews-wrapper {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .reviews-list {
+      width: 100%;
+      gap: 10px;
+
+      overflow-x: auto;
+      scroll-padding-left: 0;
+      scroll-snap-type: x mandatory;
+    }
+
+    /* COMPACT REVIEW CARDS */
+
     .review-card {
-      flex-basis: 250px;
+      flex: 0 0 76%;
+      min-height: 160px;
+      padding: 13px;
+
+      border-radius: 10px;
+      background: #ead9df;
+    }
+
+    .review-user {
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .review-avatar {
+      width: 30px;
+      height: 30px;
+      font-size: 10px;
+    }
+
+    .review-user-info h3 {
+      font-size: 11px;
+    }
+
+    .review-user-info span {
+      font-size: 9px;
+    }
+
+    .review-stars {
+      margin-bottom: 7px;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .review-text {
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    /* MOBILE ARROWS */
+
+    .reviews-arrow {
+      position: absolute;
+      z-index: 2;
+
+      top: 50%;
+      transform: translateY(-50%);
+
+      width: 28px;
+      height: 28px;
+
+      font-size: 16px;
+      background: rgba(167, 131, 136, 0.9);
+    }
+
+    .reviews-prev {
+      left: 4px;
     }
 
     .reviews-next {
-      width: 34px;
-      height: 34px;
+      right: 4px;
+    }
+
+    /* BOTTOM LINK */
+
+    .reviews-all {
+      margin-top: 16px;
+      font-size: 11px;
+    }
+
+    .reviews-all span {
+      font-size: 17px;
+    }
+  }
+
+  /* =========================
+     SMALL PHONES
+     ========================= */
+
+  @media (max-width: 380px) {
+    .bewertungen {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .review-card {
+      flex-basis: 78%;
+      padding: 11px;
+    }
+
+    .bewertungen-heading p {
+      font-size: 21px;
     }
   }
 </style>
