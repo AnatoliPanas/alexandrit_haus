@@ -1,46 +1,44 @@
 ---
-const bookingUrl = "";
+const bookingUrl = "https://alexandrithaus.sviigo.site";
 ---
 
 <section class="booking-cta" id="booking">
   <div class="booking-inner">
     <div class="booking-content">
-      <h2>Zeit für Ihre Schönheit</h2>
+      <h2>
+        Zeit für Ihre <span>Schönheit.</span>
+      </h2>
 
       <p>
         Gönnen Sie sich eine Auszeit und entdecken Sie unsere professionellen
         Beauty-Behandlungen. Wir freuen uns auf Ihren Besuch!
       </p>
 
-      {bookingUrl ? (
-        <a
-          href={bookingUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="booking-button"
-        >
-          JETZT TERMIN BUCHEN
-          <span aria-hidden="true">→</span>
-        </a>
-      ) : (
-        <span
-          class="booking-button booking-disabled"
-          aria-label="Online-Buchung folgt"
-        >
-          JETZT TERMIN BUCHEN
-          <span aria-hidden="true">→</span>
+      <a
+        href={bookingUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="booking-button"
+      >
+        JETZT TERMIN BUCHEN
+        <span class="booking-arrow" aria-hidden="true">
+          →
         </span>
-      )}
+      </a>
     </div>
   </div>
 </section>
 
 <style>
+  /* =========================
+     DESKTOP
+     ========================= */
+
   .booking-cta {
     width: 100%;
     padding: 35px 60px 65px;
     box-sizing: border-box;
-    background: #fff;
+    background: #ffffff;
   }
 
   .booking-inner {
@@ -60,26 +58,40 @@ const bookingUrl = "";
   }
 
   .booking-content {
+    width: 100%;
     max-width: 650px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
+  /* HEADING */
 
   .booking-content h2 {
     margin: 0 0 18px;
     color: #292929;
     font-size: 32px;
     font-weight: 500;
+    line-height: 1.2;
   }
+
+  .booking-content h2 span {
+    font-style: normal;
+  }
+
+  /* DESCRIPTION */
 
   .booking-content p {
     max-width: 520px;
     margin: 0 0 28px;
-    color: #555;
+
+    color: #555555;
     font-size: 14px;
     line-height: 1.7;
   }
+
+  /* BOOKING BUTTON */
 
   .booking-button {
     display: inline-flex;
@@ -92,33 +104,36 @@ const bookingUrl = "";
     box-sizing: border-box;
 
     background: #292929;
-    color: #fff;
+    color: #ffffff;
     border-radius: 30px;
 
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.5px;
     text-decoration: none;
+
     transition:
       background 0.2s,
       transform 0.2s;
   }
 
-  a.booking-button:hover {
+  .booking-button:hover {
     background: #805665;
     transform: translateY(-2px);
   }
 
-  .booking-button span {
+  .booking-arrow {
     font-size: 18px;
   }
 
-  .booking-disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  .booking-button:focus-visible {
+    outline: 2px solid #805665;
+    outline-offset: 4px;
   }
 
-  /* TABLET */
+  /* =========================
+     TABLET
+     ========================= */
 
   @media (max-width: 900px) {
     .booking-cta {
@@ -130,31 +145,107 @@ const bookingUrl = "";
     }
   }
 
-  /* MOBILE */
+  /* =========================
+     MOBILE — FIGMA
+     ========================= */
 
   @media (max-width: 600px) {
     .booking-cta {
-      padding: 25px 16px 45px;
+      width: 100%;
+      padding: 18px 10px 24px;
+      background: #ffffff;
     }
 
     .booking-inner {
-      min-height: 260px;
-      padding: 40px 20px;
+      width: 100%;
+      max-width: 100%;
+      min-height: 0;
+
+      margin: 0;
+      padding: 0;
+
+      background: transparent;
+      border-radius: 0;
     }
+
+    .booking-content {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* MOBILE HEADING */
 
     .booking-content h2 {
-      font-size: 26px;
+      margin: 0 0 12px;
+
+      color: #292929;
+      font-size: 23px;
+      font-weight: 500;
+      line-height: 1.2;
+      text-align: center;
     }
 
-    .booking-content p {
-      font-size: 13px;
+    .booking-content h2 span {
+      font-style: italic;
     }
+
+    /* MOBILE DESCRIPTION */
+
+    .booking-content p {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 0 14px;
+
+      color: #555555;
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* MOBILE BUTTON */
 
     .booking-button {
       width: 100%;
-      max-width: 280px;
-      gap: 12px;
+      max-width: 360px;
+      min-height: 44px;
+
+      padding: 10px 16px;
+      gap: 0;
+
+      background: #e5cdd2;
+      color: #292929;
+      border-radius: 30px;
+
       font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .booking-button:hover {
+      background: #d7bdc3;
+      transform: none;
+    }
+
+    .booking-arrow {
+      display: none;
+    }
+  }
+
+  /* =========================
+     SMALL PHONES
+     ========================= */
+
+  @media (max-width: 380px) {
+    .booking-content h2 {
+      font-size: 21px;
+    }
+
+    .booking-content p {
+      font-size: 11px;
+    }
+
+    .booking-button {
+      font-size: 10px;
     }
   }
 </style>
