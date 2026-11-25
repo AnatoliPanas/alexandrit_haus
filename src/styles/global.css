@@ -1,12 +1,86 @@
-@import "tailwindcss";
+
+/* =========================
+   FONTS
+   ========================= */
+
+@import "@fontsource/prata/400.css";
+
+@import "@fontsource/manrope/400.css";
+@import "@fontsource/manrope/500.css";
+@import "@fontsource/manrope/600.css";
+@import "@fontsource/manrope/700.css";
+
+@import "@fontsource/libre-franklin/400.css";
+@import "@fontsource/libre-franklin/500.css";
+@import "@fontsource/libre-franklin/600.css";
+
+@import "@fontsource/playfair-display-sc/400.css";
+
+/* =========================
+   DESIGN TOKENS
+   ========================= */
+
 :root {
-  --background: #ffffff;
-  --text-color: #292929;
-  --accent-pink: #ead9df;
-  --card-background: #dedede;
+  /* BRAND COLORS */
+
+  --color-blush: #fad1cd;
+  --color-rose: #c27e8f;
+  --color-rose-hover: #a96075;
+  --color-rose-pressed: #87495e;
+  --color-gold: #d6b477;
+
+  /* BACKGROUNDS */
+
+  --color-background: #fff9f5;
+  --color-white: #ffffff;
+  --color-neutral: #f7f1ee;
+  --color-card: #fff8f7;
+
+  /* TEXT */
+
+  --color-heading: #250702;
+  --color-text: #65464a;
+  --color-muted: #948582;
+
+  /* BORDERS */
+
+  --color-border: #e7ddda;
+
+  /* TYPOGRAPHY */
+
+  --font-heading: "Prata", serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Libre Franklin", sans-serif;
+  --font-display: "Playfair Display SC", serif;
+
+  /* LAYOUT */
+
+  --container-width: 1200px;
+  --page-width: 1440px;
+
+  --spacing-desktop: 40px;
+  --spacing-tablet: 30px;
+  --spacing-mobile: 20px;
+
+  /* BORDER RADIUS */
+
+  --radius-small: 8px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+  --radius-button: 50px;
+
+  /* TRANSITIONS */
+
+  --transition: 0.2s ease;
 }
 
-* {
+/* =========================
+   RESET
+   ========================= */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -17,7 +91,89 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--background);
-  color: var(--text-color);
-  font-family: Arial, sans-serif;
+
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: var(--color-heading);
+  font-weight: 400;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-rose-pressed);
+  outline-offset: 4px;
+}
+
+/* =========================
+   SHARED CONTAINER
+   ========================= */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1000px) {
+  :root {
+    --spacing-desktop: var(--spacing-tablet);
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --spacing-desktop: var(--spacing-mobile);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
