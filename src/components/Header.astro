@@ -1,0 +1,334 @@
+<header class="site-header">
+  <div class="header-inner">
+
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <img src="/image/logo.svg" alt="AlexandritHaus" />
+    </a>
+
+    <!-- Main navigation -->
+    <nav class="main-navigation" aria-label="Hauptnavigation">
+
+      <button class="nav-treatment" id="treatment-toggle"
+        type="button" aria-expanded="false">
+        Behandlungen
+      </button>
+
+      <button class="treatment-arrow" id="treatment-arrow"
+        type="button" aria-label="Behandlungen öffnen">
+        <span class="chevron"></span>
+      </button>
+
+      <a class="nav-about" href="#about">Über uns</a>
+      <a class="nav-why" href="#why">Warum wir?</a>
+      <a class="nav-process" href="#process">Ablauf</a>
+      <a class="nav-faq" href="#faq">FAQ</a>
+      <a class="nav-bewertungen" href="#bewertungen">Bewertungen</a>
+      <a class="nav-footer" href="#footer">Kontakt</a>
+
+    </nav>
+
+    <!-- Booking button -->
+    <button class="booking-button" type="button">
+      TERMIN BUCHEN
+    </button>
+
+    <!-- Language selector -->
+    <div class="language-selector">
+      <button class="language-toggle" id="language-toggle"
+        type="button" aria-expanded="false">
+        <span id="current-language">DE</span>
+        <span class="language-arrow">
+          <span class="chevron"></span>
+        </span>
+      </button>
+
+      <div class="language-menu" id="language-menu" hidden>
+        <button type="button" data-language="DE">DE</button>
+        <button type="button" data-language="RU">RU</button>
+        <button type="button" data-language="UA">UA</button>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<script>
+  const treatmentToggle = document.querySelector("#treatment-toggle");
+  const treatmentArrow = document.querySelector("#treatment-arrow");
+  const languageToggle = document.querySelector("#language-toggle");
+  const languageMenu = document.querySelector("#language-menu");
+  const currentLanguage = document.querySelector("#current-language");
+
+  function toggleTreatments() {
+    const isOpen =
+      treatmentToggle?.getAttribute("aria-expanded") === "true";
+
+    treatmentToggle?.setAttribute("aria-expanded", String(!isOpen));
+    treatmentArrow?.setAttribute("aria-expanded", String(!isOpen));
+  }
+
+  treatmentToggle?.addEventListener("click", toggleTreatments);
+  treatmentArrow?.addEventListener("click", toggleTreatments);
+
+  languageToggle?.addEventListener("click", () => {
+    const isOpen = languageToggle.getAttribute("aria-expanded") === "true";
+
+    languageToggle.setAttribute("aria-expanded", String(!isOpen));
+    languageMenu.hidden = isOpen;
+  });
+
+  languageMenu?.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const language = button.dataset.language;
+
+      if (!language) return;
+
+      currentLanguage.textContent = language;
+      languageMenu.hidden = true;
+      languageToggle?.setAttribute("aria-expanded", "false");
+
+      document.documentElement.lang =
+        language === "UA" ? "uk" : language.toLowerCase();
+
+      document.dispatchEvent(
+        new CustomEvent("language-change", {
+          detail: { language }
+        })
+      );
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+
+    if (
+      target instanceof Node &&
+      !languageToggle?.contains(target) &&
+      !languageMenu?.contains(target)
+    ) {
+      languageMenu.hidden = true;
+      languageToggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    width: 100%;
+    height: 90px;
+    background: #D9D9D9;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .header-inner {
+    position: relative;
+    width: 1440px;
+    height: 90px;
+    margin: 0 auto;
+  }
+
+  /* Logo */
+
+  .logo {
+    position: absolute;
+    left: 120px;
+    top: 9px;
+    /* width: 72px; */
+    height: 72px;
+    display: block;
+  }
+
+  .logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Navigation */
+
+  .main-navigation {
+    position: absolute;
+    left: 328px;
+    top: 35px;
+    width: 562px;
+    height: 20px;
+  }
+
+  .main-navigation a,
+  .nav-treatment {
+    position: absolute;
+    top: 0.5px;
+    height: 19px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #4D4D4D;
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .nav-treatment {
+    left: 0;
+    width: 97px;
+    text-align: left;
+  }
+
+  .treatment-arrow {
+    position: absolute;
+    left: 105px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-about {
+    left: 133px;
+    width: 59px;
+  }
+
+  .nav-why {
+    left: 208px;
+    width: 78px;
+  }
+
+  .nav-process {
+    left: 310px;
+    width: 42px;
+  }
+
+  .nav-faq {
+    left: 376px;
+    width: 26px;
+  }
+
+  .nav-bewertungen {
+    left: 426px;
+    width: 88px;
+  }
+
+  .nav-footer {
+    left: 538px;
+    width: 51px;
+  }
+
+  .chevron {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 0.2s ease;
+  }
+
+  #treatment-toggle[aria-expanded="true"] ~ .treatment-arrow .chevron {
+    transform: rotate(225deg) translateY(-2px);
+  }
+
+  /* Booking button */
+
+  .booking-button {
+    position: absolute;
+    left: 1069px;
+    top: 25px;
+    width: 172px;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    border-radius: 333px;
+    background: #8C8C8C;
+    color: #FFFFFF;
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    line-height: normal;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  /* Language selector */
+
+  .language-selector {
+    position: absolute;
+    left: 1270px;
+    top: 33px;
+    width: 49px;
+    height: 24px;
+  }
+
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 49px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #49363B;
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .language-arrow {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .language-menu {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    width: 80px;
+    padding: 5px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 12%);
+    border-radius: 5px;
+  }
+
+  .language-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    color: #49363B;
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .language-menu button:hover {
+    background: #F2EBED;
+  }
+
+  @media (min-width: 1441px) {
+    .header-inner {
+      width: 1440px;
+    }
+  }
+</style>
