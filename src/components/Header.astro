@@ -1,6 +1,5 @@
 <header class="site-header">
   <div class="header-inner">
-
     <!-- Logo -->
     <a href="/" class="logo">
       <img src="/image/logo.svg" alt="AlexandritHaus" />
@@ -8,24 +7,42 @@
 
     <!-- Main navigation -->
     <nav class="main-navigation" aria-label="Hauptnavigation">
-
-      <button class="nav-treatment" id="treatment-toggle"
-        type="button" aria-expanded="false">
+      <button
+        class="nav-treatment"
+        id="treatment-toggle"
+        type="button"
+        aria-expanded="false"
+      >
         Behandlungen
       </button>
 
-      <button class="treatment-arrow" id="treatment-arrow"
-        type="button" aria-label="Behandlungen öffnen">
+      <button
+        class="treatment-arrow"
+        id="treatment-arrow"
+        type="button"
+        aria-label="Behandlungen öffnen"
+      >
         <span class="chevron"></span>
       </button>
 
-      <a class="nav-about" href="#about">Über uns</a>
-      <a class="nav-why" href="#why">Warum wir?</a>
-      <a class="nav-process" href="#process">Ablauf</a>
-      <a class="nav-faq" href="#faq">FAQ</a>
-      <a class="nav-bewertungen" href="#bewertungen">Bewertungen</a>
-      <a class="nav-footer" href="#footer">Kontakt</a>
-
+      <a class="nav-about" href="#about">
+        Über uns
+      </a>
+      <a class="nav-why" href="#why">
+        Warum wir?
+      </a>
+      <a class="nav-process" href="#process">
+        Ablauf
+      </a>
+      <a class="nav-faq" href="#faq">
+        FAQ
+      </a>
+      <a class="nav-bewertungen" href="#bewertungen">
+        Bewertungen
+      </a>
+      <a class="nav-footer" href="#footer">
+        Kontakt
+      </a>
     </nav>
 
     <!-- Booking button -->
@@ -35,8 +52,12 @@
 
     <!-- Language selector -->
     <div class="language-selector">
-      <button class="language-toggle" id="language-toggle"
-        type="button" aria-expanded="false">
+      <button
+        class="language-toggle"
+        id="language-toggle"
+        type="button"
+        aria-expanded="false"
+      >
         <span id="current-language">DE</span>
         <span class="language-arrow">
           <span class="chevron"></span>
@@ -44,25 +65,29 @@
       </button>
 
       <div class="language-menu" id="language-menu" hidden>
-        <button type="button" data-language="DE">DE</button>
-        <button type="button" data-language="RU">RU</button>
-        <button type="button" data-language="UA">UA</button>
+        <button type="button" data-language="DE">
+          DE
+        </button>
+        <button type="button" data-language="RU">
+          RU
+        </button>
+        <button type="button" data-language="UA">
+          UA
+        </button>
       </div>
     </div>
-
   </div>
 </header>
 
 <script>
-  const treatmentToggle = document.querySelector("#treatment-toggle");
-  const treatmentArrow = document.querySelector("#treatment-arrow");
-  const languageToggle = document.querySelector("#language-toggle");
-  const languageMenu = document.querySelector("#language-menu");
-  const currentLanguage = document.querySelector("#current-language");
+  const treatmentToggle = document.querySelector<HTMLButtonElement>("#treatment-toggle");
+  const treatmentArrow = document.querySelector<HTMLButtonElement>("#treatment-arrow");
+  const languageToggle = document.querySelector<HTMLButtonElement>("#language-toggle");
+  const languageMenu = document.querySelector<HTMLDivElement>("#language-menu");
+  const currentLanguage = document.querySelector<HTMLSpanElement>("#current-language");
 
   function toggleTreatments() {
-    const isOpen =
-      treatmentToggle?.getAttribute("aria-expanded") === "true";
+    const isOpen = treatmentToggle?.getAttribute("aria-expanded") === "true";
 
     treatmentToggle?.setAttribute("aria-expanded", String(!isOpen));
     treatmentArrow?.setAttribute("aria-expanded", String(!isOpen));
@@ -75,7 +100,9 @@
     const isOpen = languageToggle.getAttribute("aria-expanded") === "true";
 
     languageToggle.setAttribute("aria-expanded", String(!isOpen));
-    languageMenu.hidden = isOpen;
+    if (languageMenu) {
+      languageMenu.hidden = isOpen;
+    }
   });
 
   languageMenu?.querySelectorAll("button").forEach((button) => {
@@ -84,8 +111,14 @@
 
       if (!language) return;
 
-      currentLanguage.textContent = language;
-      languageMenu.hidden = true;
+      if (currentLanguage) {
+        currentLanguage.textContent = language;
+      }
+
+      if (languageMenu) {
+        languageMenu.hidden = true;
+      }
+
       languageToggle?.setAttribute("aria-expanded", "false");
 
       document.documentElement.lang =
@@ -93,8 +126,8 @@
 
       document.dispatchEvent(
         new CustomEvent("language-change", {
-          detail: { language }
-        })
+          detail: { language },
+        }),
       );
     });
   });
@@ -107,7 +140,10 @@
       !languageToggle?.contains(target) &&
       !languageMenu?.contains(target)
     ) {
-      languageMenu.hidden = true;
+      if (languageMenu) {
+        languageMenu.hidden = true;
+      }
+
       languageToggle?.setAttribute("aria-expanded", "false");
     }
   });
@@ -117,7 +153,7 @@
   .site-header {
     width: 100%;
     height: 90px;
-    background: #D9D9D9;
+    background: #d9d9d9;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -166,7 +202,7 @@
     padding: 0;
     border: 0;
     background: none;
-    color: #4D4D4D;
+    color: #4d4d4d;
     font-family: "Manrope", sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -253,8 +289,8 @@
     padding: 10px;
     border: none;
     border-radius: 333px;
-    background: #8C8C8C;
-    color: #FFFFFF;
+    background: #8c8c8c;
+    color: #ffffff;
     font-family: "Manrope", sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -283,7 +319,7 @@
     padding: 0;
     border: none;
     background: transparent;
-    color: #49363B;
+    color: #49363b;
     font-family: "Manrope", sans-serif;
     font-size: 16px;
     font-weight: 500;
@@ -304,7 +340,7 @@
     right: 0;
     width: 80px;
     padding: 5px;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0 4px 12px rgb(0 0 0 / 12%);
     border-radius: 5px;
   }
@@ -315,7 +351,7 @@
     padding: 8px;
     border: none;
     background: transparent;
-    color: #49363B;
+    color: #49363b;
     font-family: "Manrope", sans-serif;
     font-size: 14px;
     text-align: left;
@@ -323,7 +359,7 @@
   }
 
   .language-menu button:hover {
-    background: #F2EBED;
+    background: #f2ebed;
   }
 
   @media (min-width: 1441px) {

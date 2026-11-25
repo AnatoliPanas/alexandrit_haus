@@ -3,7 +3,8 @@
    FONTS
    ========================= */
 
-@import "@fontsource/prata/400.css";
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display+SC:wght@400&family=Prata&display=swap');
+/* @import "@fontsource/prata/400.css";
 
 @import "@fontsource/manrope/400.css";
 @import "@fontsource/manrope/500.css";
@@ -14,7 +15,7 @@
 @import "@fontsource/libre-franklin/500.css";
 @import "@fontsource/libre-franklin/600.css";
 
-@import "@fontsource/playfair-display-sc/400.css";
+@import "@fontsource/playfair-display-sc/400.css"; */
 
 /* =========================
    DESIGN TOKENS
