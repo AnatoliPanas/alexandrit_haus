@@ -178,3 +178,7 @@ a:focus-visible {
     scroll-behavior: auto;
   }
 }
+section[id],
+footer[id] {
+  scroll-margin-top: 100px;
+}
