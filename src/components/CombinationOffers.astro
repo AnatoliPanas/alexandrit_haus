@@ -1,186 +1,331 @@
 ---
+const bookingUrl = "https://alexandrithaus.sviigo.site";
+// Temporary package data from Figma
 const offers = [
   {
     id: 1,
-    title: "First Combination",
-    description: "First description",
-    price: "99 €",
+    title: "Bikini & Achseln",
+    description: "Zwei Zonen in einem Paket",
+    price: "ab €89",
+    image: "../../public/images/offers/bikini-achseln.png",
+    popular: true,
   },
-
   {
     id: 2,
-    title: "Second Combination",
-    description: "Second description",
-    price: "99 €",
+    title: "Bikini & Achseln",
+    description: "Zwei Zonen in einem Paket",
+    price: "ab €89",
+    image: "../../public/images/offers/bikini-achseln.png",
+    popular: false,
   },
   {
     id: 3,
     title: "Bikini & Achseln",
-    description: "Beliebtes Behandlungspaket",
-    price: "69 €",
+    description: "Zwei Zonen in einem Paket",
+    price: "ab €89",
+    image: "../../public/images/offers/bikini-achseln.png",
+    popular: false,
   },
 ];
 ---
 
 <section class="combination-offers" id="offers">
-  <div class="offers-intro">
-    <h2>Unsere beliebten Behandlungspakete</h2>
+  <div class="offers-inner">
+    <!-- INTRO -->
 
-    <p>
-      Entdecken Sie unsere beliebtesten Kombinationen und finden Sie Ihr
-      passendes Angebot.
-    </p>
+    <div class="offers-intro">
+      <span class="offers-label">PAKETANGEBOTE</span>
+
+      <h2>
+        Unsere beliebten
+        <span>Behandlungspakete</span>
+      </h2>
+
+      <div class="offers-divider"></div>
+
+      <p>
+        Kombiniere mehrere Behandlungszonen in einem Paket und profitiere von
+        attraktiven Paketpreisen.
+      </p>
+
+      <a
+        href={bookingUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="offers-button"
+      >
+        JETZT TERMIN BUCHEN
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <!-- OFFER CARDS -->
+
+    <div class="offers-content">
+      <div class="offers-list" tabindex="0" aria-label="Behandlungspakete">
+        {offers.map((offer) => (
+          <article
+            class:list={["offer-card", { "offer-popular": offer.popular }]}
+          >
+            <div class="offer-image">
+              <img src={offer.image} alt={offer.title} loading="lazy" />
+            </div>
+
+            <div class="offer-info">
+              <span
+                class:list={["offer-badge", { "badge-hidden": !offer.popular }]}
+              >
+                BELIEBT
+              </span>
+
+              <div class="offer-description">
+                <h3>{offer.title}</h3>
+                <p>{offer.description}</p>
+              </div>
+
+              <div class="offer-bottom">
+                <span class="offer-price">{offer.price}</span>
+
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="offer-booking"
+                  aria-label={`Paket ${offer.title} buchen`}
+                >
+                  Buchen
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- CAROUSEL NAVIGATION -->
+
+      <div class="offers-navigation">
+        <button
+          class="offers-prev"
+          type="button"
+          aria-label="Vorherige Angebote"
+        >
+          ←
+        </button>
+
+        <button class="offers-next" type="button" aria-label="Weitere Angebote">
+          →
+        </button>
+      </div>
+    </div>
+
+    <!-- MOBILE CTA -->
 
     <a
-      href="https://alexandrithaus.sviigo.site"
+      href={bookingUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="offers-button"
+      class="offers-all"
     >
-      Jetzt buchen
+      ALLE PAKETE ANSEHEN
+      <span aria-hidden="true">→</span>
     </a>
   </div>
-
-  <div class="offers-content">
-    <div class="offers-list">
-      {offers.map((offer) => (
-        <article class="offer-card">
-          <div class="offer-image">
-            <span>Foto</span>
-          </div>
-
-          <div class="offer-info">
-            <h3>{offer.title}</h3>
-            <p>{offer.description}</p>
-            <span class="offer-price">{offer.price}</span>
-          </div>
-
-          <a
-            href="https://alexandrithaus.sviigo.site"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="offer-arrow"
-            aria-label={`Paket ${offer.title} buchen`}
-          >
-            <span class="desktop-arrow">→</span>
-            <span class="mobile-booking">Buchen</span>
-          </a>
-        </article>
-      ))}
-    </div>
-
-    <div class="offers-navigation">
-      <button class="offers-prev" type="button" aria-label="Vorherige Angebote">
-        ←
-      </button>
-
-      <button class="offers-next" type="button" aria-label="Weitere Angebote">
-        →
-      </button>
-    </div>
-  </div>
-
-  <a
-    href="https://alexandrithaus.sviigo.site"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="offers-all"
-  >
-    ALLE PAKETE ANSEHEN <span aria-hidden="true">→</span>
-  </a>
 </section>
 
 <script>
-  const section = document.querySelector(".combination-offers");
-  const offersList = section?.querySelector(".offers-list");
+  const sections = document.querySelectorAll(".combination-offers");
 
-  const prevButton = section?.querySelector(".offers-prev");
-  const nextButton = section?.querySelector(".offers-next");
+  sections.forEach((section) => {
+    const list = section.querySelector<HTMLElement>(".offers-list");
+    const prev = section.querySelector<HTMLButtonElement>(".offers-prev");
+    const next = section.querySelector<HTMLButtonElement>(".offers-next");
 
-  function scrollOffers(direction: number) {
-    if (!offersList) return;
+    if (!list || !prev || !next) return;
 
-    const card = offersList.querySelector(".offer-card");
-    if (!card) return;
+    function scrollOffers(direction: number) {
+      if (!list) return;
 
-    const gap = parseFloat(getComputedStyle(offersList).gap) || 0;
-    const scrollAmount = card.getBoundingClientRect().width + gap;
+      const card = list.querySelector<HTMLElement>(".offer-card");
 
-    offersList.scrollBy({
-      left: direction * scrollAmount,
-      behavior: "smooth",
+      if (!card) return;
+
+      const gap = parseFloat(getComputedStyle(list).gap) || 0;
+      const distance = card.getBoundingClientRect().width + gap;
+
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      list.scrollBy({
+        left: direction * distance,
+        behavior: reducedMotion ? "instant" : "smooth",
+      });
+    }
+
+    function updateButtons() {
+      if (!list || !prev || !next) return;
+
+      prev.disabled = list.scrollLeft <= 1;
+
+      next.disabled =
+        list.scrollLeft + list.clientWidth >= list.scrollWidth - 1;
+    }
+
+    prev.addEventListener("click", () => scrollOffers(-1));
+    next.addEventListener("click", () => scrollOffers(1));
+
+    list.addEventListener("scroll", updateButtons, {
+      passive: true,
     });
-  }
 
-  prevButton?.addEventListener("click", () => scrollOffers(-1));
-  nextButton?.addEventListener("click", () => scrollOffers(1));
+    const observer = new ResizeObserver(updateButtons);
+    observer.observe(list);
+
+    updateButtons();
+  });
 </script>
 
 <style>
+  /* =========================
+     DESKTOP
+     ========================= */
+
   .combination-offers {
     width: 100%;
-    max-width: 1440px;
-    height: 450px;
-    padding: 40px 60px;
-    margin: 0 auto;
-    box-sizing: border-box;
+    padding: 60px 40px;
 
-    background-color: #dedede;
-
-    display: grid;
-    grid-template-columns: 35% 65%;
-    align-items: center;
-    gap: 30px;
+    background: var(--color-card);
+    border-block: 1px solid #eed9d9;
   }
 
-  /* LEFT SIDE */
+  .offers-inner {
+    width: 100%;
+    max-width: var(--container-width);
+    min-height: 330px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* INTRO */
 
   .offers-intro {
-    max-width: 380px;
+    min-width: 0;
+  }
+
+  .offers-label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-family: var(--font-label);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2.1px;
+
+    color: var(--color-muted);
   }
 
   .offers-intro h2 {
-    margin: 0 0 20px;
-    font-size: 28px;
-    font-weight: 500;
-    color: #292929;
+    margin: 0;
+
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 2.8vw, 40px);
+    font-weight: 400;
+    line-height: 1.2;
+
+    color: var(--color-heading);
+  }
+
+  .offers-intro h2 span {
+    display: block;
+
+    background: linear-gradient(95.8deg, #e8bb61 26.74%, #826936 117.04%);
+
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .offers-divider {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+
+    background: var(--color-gold);
   }
 
   .offers-intro p {
-    max-width: 320px;
-    margin: 0 0 24px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #555;
+    max-width: 420px;
+    margin-bottom: 24px;
+
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+
+    color: var(--color-text);
   }
 
-  .offers-button {
-    display: inline-block;
-    padding: 12px 24px;
-    border-radius: 30px;
-    background-color: #292929;
-    color: white;
-    font-size: 13px;
-    text-decoration: none;
-  }
+  /* PRIMARY BUTTON */
 
-  /* RIGHT SIDE */
-
-  .offers-content {
+  .offers-button,
+  .offers-all {
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    gap: 15px;
+
+    width: fit-content;
+    min-height: 46px;
+    padding: 12px 24px;
+
+    border-radius: 333px;
+    background: var(--color-rose);
+    color: var(--color-white);
+
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+
+    transition: background var(--transition);
+  }
+
+  .offers-button:hover,
+  .offers-all:hover,
+  .offer-booking:hover {
+    background: var(--color-rose-hover);
+  }
+
+  .offers-button:active,
+  .offers-all:active,
+  .offer-booking:active {
+    background: var(--color-rose-pressed);
+  }
+
+  .offers-button span,
+  .offers-all span {
+    font-size: 25px;
+    line-height: 1;
+  }
+
+  /* CAROUSEL */
+
+  .offers-content {
     min-width: 0;
   }
 
   .offers-list {
     display: flex;
     gap: 24px;
-    flex: 0 1 586px;
+
     min-width: 0;
+    padding: 5px 3px 8px;
 
     overflow-x: auto;
-    scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
   }
@@ -189,148 +334,340 @@ const offers = [
     display: none;
   }
 
-  /* OFFER CARD */
+  /* CARDS */
 
   .offer-card {
     position: relative;
-    flex: 0 0 281px;
-    width: 281px;
-    height: 287px;
-    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
+    gap: 10px;
 
-    background-color: #c4c4c4;
-    border-radius: 12px;
-    overflow: hidden;
+    flex: 0 0 281px;
+    min-height: 287px;
+    padding: 12px;
+    padding-top: 36px;
+
+    border: 1px solid #eed9d9;
+    border-radius: 16px;
+
+    background: var(--color-card);
+    box-shadow: 1px 2px 4px rgb(0 0 0 / 15%);
 
     scroll-snap-align: start;
   }
 
+  .offer-popular {
+    background: linear-gradient(233.76deg, #ffd0dc 8.67%, #ffffff 78.98%);
+  }
+
   .offer-image {
-    height: 155px;
+    width: 100%;
+    height: 145px;
     flex-shrink: 0;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-neutral);
+  }
 
-    background-color: #aaa;
-    color: #555;
-    font-size: 14px;
+  .offer-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
   }
 
   .offer-info {
-    flex: 1;
-    padding: 18px;
-
     display: flex;
     flex-direction: column;
+    flex: 1;
     gap: 8px;
+
+    min-width: 0;
   }
 
-  .offer-info h3 {
-    margin: 0;
-    font-size: 17px;
+  /* BADGE */
+
+  .offer-badge {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    height: 17px;
+    padding: 0 10px;
+
+    background: var(--color-white);
+    border: 1px solid #bb964d;
+    border-radius: 333px;
+
+    color: #bb964d;
+    font-family: var(--font-body);
+    font-size: 10px;
     font-weight: 500;
-    color: #292929;
+    letter-spacing: 1px;
   }
 
-  .offer-info p {
+  .badge-hidden {
+    visibility: hidden;
+  }
+
+  /* CARD TEXT */
+
+  .offer-description h3 {
+    margin: 0 0 3px;
+
+    color: var(--color-heading);
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 1.3;
+  }
+
+  .offer-description p {
     margin: 0;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #555;
+
+    color: var(--color-muted);
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .offer-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+
+    margin-top: auto;
   }
 
   .offer-price {
+    color: var(--color-heading);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .offer-booking {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 32px;
+    padding: 5px 15px;
+
+    background: var(--color-rose);
+    color: var(--color-white);
+    border-radius: 333px;
+
+    font-family: var(--font-body);
     font-size: 14px;
-    font-weight: 600;
-    color: #292929;
-  }
-
-  /* CARD ARROW */
-
-  .offer-arrow {
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-
-    width: 32px;
-    height: 32px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-    background-color: #999;
-    color: white;
-    font-size: 20px;
+    letter-spacing: 1.4px;
     text-decoration: none;
+    white-space: nowrap;
+
+    transition: background var(--transition);
   }
 
-  /* NEXT ARROW */
+  /* NAVIGATION */
 
-  .offers-next {
-    flex-shrink: 0;
-    width: 42px;
-    height: 42px;
+  .offers-navigation {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
+  }
 
+  .offers-navigation button {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: none;
+    width: 38px;
+    height: 38px;
+
+    background: transparent;
+    color: var(--color-heading);
+    border: 1px solid var(--color-gold);
     border-radius: 50%;
-    background-color: #888;
-    color: white;
-    font-size: 24px;
+
+    font-size: 20px;
     cursor: pointer;
+    transition: background var(--transition);
   }
 
-  /* HIDDEN ON DESKTOP */
+  .offers-navigation button:hover:not(:disabled) {
+    background: var(--color-rose);
+    color: var(--color-white);
+  }
 
-  .offers-all,
-  .mobile-booking {
+  .offers-navigation button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .offers-all {
     display: none;
   }
 
-  /* MOBILE VERSION */
+  /* =========================
+     TABLET
+     Figma: 834px
+     ========================= */
 
-  @media (max-width: 600px) {
+  @media (min-width: 701px) and (max-width: 1100px) {
     .combination-offers {
+      padding: 25px 32px 18px;
+    }
+
+    .offers-inner {
+      min-height: 211px;
+
+      grid-template-columns: minmax(0, 357px) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .offers-label {
+      margin-bottom: 5px;
+      font-size: 13px;
+      letter-spacing: 1.95px;
+    }
+
+    .offers-intro h2 {
+      font-size: 32px;
+      line-height: 38px;
+    }
+
+    .offers-divider {
+      margin: 12px 0;
+    }
+
+    .offers-intro p {
+      margin-bottom: 12px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .offers-button {
       width: 100%;
-      height: auto;
-      max-width: 100%;
+      max-width: 344px;
+      height: 46px;
+      padding: 10px;
 
-      padding: 20px 16px;
+      font-size: 16px;
+      letter-spacing: 1.6px;
+    }
+
+    .offers-list {
+      gap: 19px;
+    }
+
+    .offer-card {
+      flex-basis: 181px;
+      min-height: 201px;
+      height: 201px;
+
+      padding: 7px;
+      padding-top: 33px;
+      gap: 3px;
+
+      border-radius: 8px;
+    }
+
+    .offer-image {
+      height: 75px;
+    }
+
+    .offer-image img {
+      object-position: center bottom;
+    }
+
+    .offer-badge {
+      top: 7px;
+      left: 7px;
+    }
+
+    .badge-hidden {
+      visibility: visible;
+    }
+
+    .offer-info {
+      gap: 3px;
+    }
+
+    .offer-description h3 {
       margin: 0;
+      font-size: 15px;
+      letter-spacing: 1.5px;
+    }
 
+    .offer-description p {
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    .offer-price {
+      font-size: 13px;
+    }
+
+    .offer-booking {
+      min-height: 25px;
+      height: 25px;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    .offers-navigation {
+      display: none;
+    }
+  }
+
+  /* =========================
+     MOBILE
+     Figma: 402px
+     ========================= */
+
+  @media (max-width: 700px) {
+    .combination-offers {
+      padding: 20px;
+      background: var(--color-background);
+      border: none;
+    }
+
+    .offers-inner {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      align-items: stretch;
+      gap: 15px;
 
-      background: #f6e7e9;
+      min-height: 0;
     }
 
     /* HEADER */
 
-    .offers-intro {
-      width: 100%;
-      max-width: 100%;
+    .offers-label {
+      margin-bottom: 5px;
+
+      font-size: 12px;
+      letter-spacing: 1.8px;
     }
 
     .offers-intro h2 {
-      max-width: 250px;
-      margin: 0 0 10px;
-
-      font-size: 23px;
-      font-weight: 500;
-      line-height: 1.15;
+      font-size: 24px;
+      line-height: 28px;
     }
 
+    .offers-divider,
     .offers-intro p,
     .offers-button {
       display: none;
@@ -338,151 +675,135 @@ const offers = [
 
     /* CARDS */
 
-    .offers-content {
-      display: block;
-      width: 100%;
-    }
-
     .offers-list {
-      display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 11px;
 
       width: 100%;
+      padding: 0;
+
       overflow: visible;
+      scroll-snap-type: none;
     }
 
     .offer-card {
-      position: relative;
-
       display: grid;
-      grid-template-columns: 58px minmax(0, 1fr) auto;
+      grid-template-columns: 75px minmax(0, 1fr);
       align-items: center;
-      gap: 10px;
+      gap: 9px;
 
       width: 100%;
-      height: 84px;
-      min-height: 84px;
+      min-height: 97px;
+      height: auto;
       flex: none;
-
       padding: 9px;
-      box-sizing: border-box;
 
-      border-radius: 10px;
-      background: #d8c1c4;
+      border-radius: 16px;
+      box-shadow: none;
+    }
+
+    .offer-popular {
+      background: linear-gradient(265.68deg, #f4d0d0 0.14%, #ffffff 99.86%);
     }
 
     .offer-image {
-      width: 58px;
-      height: 58px;
+      width: 75px;
+      height: 75px;
+      border-radius: 8px;
+    }
 
-      border-radius: 7px;
-      background: #bca9ad;
+    .offer-image img {
+      object-position: center;
     }
 
     .offer-info {
-      min-width: 0;
-      padding: 0;
-      gap: 3px;
+      height: 100%;
+      min-height: 75px;
+      gap: 4px;
     }
 
-    .offer-info h3 {
-      margin: 0;
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 1.3;
+    .offer-badge {
+      position: static;
+      flex-shrink: 0;
     }
 
-    .offer-info p {
+    .badge-hidden {
       display: none;
+    }
+
+    .offer-description h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      line-height: 20px;
+    }
+
+    .offer-description p {
+      font-size: 10px;
+      letter-spacing: 1px;
+      line-height: 14px;
+    }
+
+    .offer-bottom {
+      align-items: flex-end;
+      margin-top: auto;
     }
 
     .offer-price {
-      font-size: 12px;
-      font-weight: 500;
+      font-size: 13px;
     }
 
-    /* BOOKING BUTTON */
-
-    .offer-arrow {
-      position: static;
-
-      width: auto;
-      height: 30px;
+    .offer-booking {
+      height: 25px;
+      min-height: 25px;
       padding: 0 10px;
 
-      border-radius: 20px;
-      background: #f7eeee;
-      color: #292929;
-
-      font-size: 11px;
-      white-space: nowrap;
+      font-size: 14px;
+      letter-spacing: 1.4px;
     }
 
-    .desktop-arrow {
+    /* HIDE CAROUSEL NAVIGATION */
+
+    .offers-navigation {
       display: none;
     }
 
-    .mobile-booking {
-      display: inline;
-    }
-
-    /* HIDE DESKTOP NEXT BUTTON */
-
-    .offers-next {
-      display: none;
-    }
-
-    /* ALL PACKAGES */
+    /* MOBILE BUTTON */
 
     .offers-all {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-
       width: 100%;
-      padding: 12px 0 2px;
 
-      color: #292929;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.4px;
-      text-decoration: none;
-    }
+      height: 37px;
+      min-height: 37px;
+      margin-top: 8px;
+      padding: 5px 10px;
 
-    .offers-all span {
-      font-size: 20px;
+      font-size: 15px;
+      letter-spacing: 1.5px;
     }
   }
-  .offers-navigation {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
 
-  .offers-navigation .offers-prev,
-  .offers-navigation .offers-next {
-    position: static;
-    width: 38px;
-    height: 38px;
-    border: 1px solid #292929;
-    border-radius: 50%;
-    background: transparent;
-    color: #292929;
-    font-size: 20px;
-    cursor: pointer;
-  }
+  /* SMALL PHONES */
 
-  .offers-navigation button:hover {
-    background: #292929;
-    color: #fff;
-  }
+  @media (max-width: 360px) {
+    .combination-offers {
+      padding-inline: 12px;
+    }
 
-  /* На мобільному приховуємо стрілки */
-  @media (max-width: 600px) {
-    .offers-navigation {
-      display: none;
+    .offer-description h3 {
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+
+    .offer-description p {
+      letter-spacing: 0.3px;
+    }
+
+    .offers-all {
+      font-size: 13px;
+      letter-spacing: 1px;
     }
   }
 </style>
