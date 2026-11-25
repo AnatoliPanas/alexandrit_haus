@@ -1,5 +1,16 @@
 ---
 const bookingUrl = "https://alexandrithaus.sviigo.site";
+const iconPath = "/images/treatments";
+
+const groupIcons: Record<string, string> = {
+  Gesicht: "face.png",
+  Körper: "body.png",
+  Intimbereich: "intimate.png",
+  Beine: "legs.png",
+  Spezialzonen: "special.png",
+  Gesichtsbehandlungen: "face.png",
+  Maniküre: "special.png",
+};
 
 const categories = [
   {
@@ -46,20 +57,14 @@ const categories = [
     ],
   },
   {
-    id: "electro",
-    title: "Elektroepilation",
+    id: "manicure",
+    title: "Maniküre",
     groups: [
       {
-        name: "Gesicht",
+        name: "Maniküre",
         treatments: [
-          { zone: "Oberlippe", duration: "15 Min.", price: "35 €" },
-          { zone: "Kinn", duration: "30 Min.", price: "60 €" },
-        ],
-      },
-      {
-        name: "Körper",
-        treatments: [
-          { zone: "Kleine Zone", duration: "30 Min.", price: "60 €" },
+          { zone: "Klassische Maniküre", duration: "45 Min.", price: "39 €" },
+          { zone: "Maniküre mit Lack", duration: "60 Min.", price: "49 €" },
         ],
       },
     ],
@@ -78,14 +83,20 @@ const categories = [
     ],
   },
   {
-    id: "manicure",
-    title: "Maniküre",
+    id: "electro",
+    title: "Elektroepilation",
     groups: [
       {
-        name: "Maniküre",
+        name: "Gesicht",
         treatments: [
-          { zone: "Klassische Maniküre", duration: "45 Min.", price: "39 €" },
-          { zone: "Maniküre mit Lack", duration: "60 Min.", price: "49 €" },
+          { zone: "Oberlippe", duration: "15 Min.", price: "35 €" },
+          { zone: "Kinn", duration: "30 Min.", price: "60 €" },
+        ],
+      },
+      {
+        name: "Körper",
+        treatments: [
+          { zone: "Kleine Zone", duration: "30 Min.", price: "60 €" },
         ],
       },
     ],
@@ -95,12 +106,8 @@ const categories = [
 
 <section class="treatments" id="treatments">
   <div class="treatments-inner">
-    <div class="treatments-heading">
-      <h2>Laser-Haarentfernung</h2>
-      <p>Preise & Zonen</p>
-    </div>
-
     <!-- CATEGORY TABS -->
+
     <div
       class="category-tabs"
       role="tablist"
@@ -115,13 +122,22 @@ const categories = [
           aria-selected={index === 0 ? "true" : "false"}
           aria-controls={`panel-${category.id}`}
           id={`tab-${category.id}`}
+          tabindex={index === 0 ? 0 : -1}
         >
           {category.title}
         </button>
       ))}
     </div>
 
+    <!-- HEADING -->
+
+    <div class="treatments-heading">
+      <p class="category-title">Laser-Haarentfernung</p>
+      <h2>Preise &amp; Zonen</h2>
+    </div>
+
     <!-- CATEGORY PANELS -->
+
     {categories.map((category, categoryIndex) => (
       <div
         class="category-panel"
@@ -132,6 +148,7 @@ const categories = [
         hidden={categoryIndex !== 0}
       >
         <!-- DESKTOP TABLE -->
+
         <div class="desktop-table">
           <div class="table-heading">
             <span>Zone</span>
@@ -153,13 +170,16 @@ const categories = [
                     href={bookingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`${item.zone} einzeln buchen`}
                   >
                     Einzeln
                   </a>
+
                   <a
                     href={bookingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`${item.zone} als Paket buchen`}
                   >
                     Paket
                   </a>
@@ -168,17 +188,26 @@ const categories = [
             ))}
         </div>
 
-        <!-- MOBILE ACCORDION -->
+        <!-- TABLET & MOBILE ACCORDIONS -->
+
         <div class="mobile-groups">
           {category.groups.map((group, groupIndex) => (
-            <details class="treatment-group" open={groupIndex === 0}>
+            <details class="treatment-group" open={groupIndex < 2}>
               <summary>
                 <span class="group-name">
-                  <span class="group-circle"></span>
+                  <span class="group-icon">
+                    <img
+                      src={`${iconPath}/${groupIcons[group.name] || "special.png"}`}
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </span>
+
                   {group.name}
                 </span>
+
                 <span class="group-chevron" aria-hidden="true">
-                  ⌄
+                  <img src={`${iconPath}/chevron.png`} alt="" />
                 </span>
               </summary>
 
@@ -187,13 +216,30 @@ const categories = [
                   <span>Zone</span>
                   <span>Dauer</span>
                   <span>Preis</span>
+                  <span />
                 </div>
 
                 {group.treatments.map((item) => (
                   <div class="mobile-treatment-row">
-                    <span>{item.zone}</span>
-                    <span>{item.duration}</span>
-                    <span>{item.price}</span>
+                    <span class="treatment-zone">{item.zone}</span>
+
+                    <span class="treatment-duration">{item.duration}</span>
+
+                    <span class="treatment-price">{item.price}</span>
+
+                    <a
+                      class="treatment-booking"
+                      href={bookingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${item.zone} buchen`}
+                    >
+                      <img
+                        src={`${iconPath}/booking.png`}
+                        alt=""
+                        aria-hidden="true"
+                      />
+                    </a>
                   </div>
                 ))}
               </div>
@@ -203,13 +249,18 @@ const categories = [
       </div>
     ))}
 
+    <!-- MAIN BOOKING BUTTON -->
+
     <a
-      class="mobile-booking"
+      class="main-booking"
       href={bookingUrl}
       target="_blank"
       rel="noopener noreferrer"
     >
-      Termin buchen
+      JETZT TERMIN BUCHEN
+      <span class="booking-arrow" aria-hidden="true">
+        <img src={`${iconPath}/booking.png`} alt="" />
+      </span>
     </a>
   </div>
 </section>
@@ -219,192 +270,324 @@ const categories = [
     document.querySelectorAll<HTMLElement>(".treatments");
 
   treatmentSections.forEach((section) => {
-    const tabs = section.querySelectorAll<HTMLButtonElement>(".category-tab");
-    const panels = section.querySelectorAll<HTMLElement>(".category-panel");
-    const heading = section.querySelector<HTMLElement>(
-      ".treatments-heading h2",
+    const tabs = Array.from(
+      section.querySelectorAll<HTMLButtonElement>(".category-tab"),
     );
 
-    tabs.forEach((tab) => {
+    const panels = section.querySelectorAll<HTMLElement>(".category-panel");
+
+    const heading = section.querySelector<HTMLElement>(".category-title");
+
+    function activateTab(tab: HTMLButtonElement) {
+      const selected = tab.dataset.category;
+
+      tabs.forEach((item) => {
+        const active = item === tab;
+
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-selected", String(active));
+        item.tabIndex = active ? 0 : -1;
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.panel !== selected;
+      });
+
+      if (heading) {
+        heading.textContent = tab.textContent?.trim() ?? "";
+      }
+    }
+
+    tabs.forEach((tab, index) => {
       tab.addEventListener("click", () => {
-        const selected = tab.dataset.category;
+        activateTab(tab);
+      });
 
-        tabs.forEach((item) => {
-          const active = item === tab;
-          item.classList.toggle("active", active);
-          item.setAttribute("aria-selected", String(active));
-        });
+      tab.addEventListener("keydown", (event) => {
+        let nextIndex = index;
 
-        panels.forEach((panel) => {
-          panel.hidden = panel.dataset.panel !== selected;
-        });
+        switch (event.key) {
+          case "ArrowRight":
+            nextIndex = (index + 1) % tabs.length;
+            break;
 
-        if (heading) heading.textContent = tab.textContent?.trim() ?? "";
+          case "ArrowLeft":
+            nextIndex = (index - 1 + tabs.length) % tabs.length;
+            break;
+
+          case "Home":
+            nextIndex = 0;
+            break;
+
+          case "End":
+            nextIndex = tabs.length - 1;
+            break;
+
+          default:
+            return;
+        }
+
+        event.preventDefault();
+
+        tabs[nextIndex].focus();
+        activateTab(tabs[nextIndex]);
       });
     });
   });
 </script>
 
 <style>
+  /* ==============================
+     SECTION
+  ============================== */
+
   .treatments {
     width: 100%;
-    padding: 60px;
-    box-sizing: border-box;
-    background: #fff;
+    padding: 60px 40px;
+    background: var(--color-background, #fff9f5);
+    font-family: var(--font-body, "Manrope", sans-serif);
+    color: var(--color-heading, #250702);
   }
 
   .treatments-inner {
-    max-width: 1320px;
+    width: 100%;
+    max-width: 1200px;
+    min-width: 0;
     margin: 0 auto;
   }
 
-  .treatments-heading h2 {
-    margin: 0 0 5px;
-    font-size: 28px;
-    font-weight: 500;
-    color: #292929;
-  }
-
-  .treatments-heading p {
-    margin: 0 0 28px;
-    font-size: 16px;
-    color: #777;
-  }
+  /* ==============================
+     CATEGORY TABS
+  ============================== */
 
   .category-tabs {
     display: flex;
+    align-items: center;
     gap: 12px;
-    margin-bottom: 28px;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 3px 3px 5px;
+  }
+
+  .category-tabs::-webkit-scrollbar {
+    display: none;
   }
 
   .category-tab {
-    flex: 1;
-    padding: 15px 10px;
-    border: none;
-    background: transparent;
-    color: #777;
-    font: inherit;
-    font-size: 14px;
+    flex: 1 0 auto;
+    padding: 12px 20px;
+    border: 1px solid #eed9d9;
+    border-radius: 50px;
+    background: #fff8f7;
+    color: #65464a;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
     cursor: pointer;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .category-tab:hover {
+    background: #fcefed;
   }
 
   .category-tab.active {
-    color: #a87889;
-    border-bottom: 2px solid #a87889;
+    background: var(--color-rose, #c27e8f);
+    border-color: var(--color-rose, #c27e8f);
+    color: #fff;
+  }
+
+  /* ==============================
+     HEADING
+  ============================== */
+
+  .treatments-heading {
+    margin-bottom: 24px;
+  }
+
+  .category-title {
+    margin: 0 0 3px;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1.6px;
+    color: #65464a;
+  }
+
+  .treatments-heading h2 {
+    margin: 0;
+    font-family: var(--font-heading, "Prata", serif);
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 1.35;
+    color: #250702;
   }
 
   .category-panel[hidden] {
     display: none !important;
   }
 
-  /* DESKTOP TABLE */
+  /* ==============================
+     DESKTOP TABLE
+  ============================== */
+
+  .desktop-table {
+    padding: 16px 24px;
+    border: 1px solid #eed9d9;
+    border-radius: 16px;
+    background: #fff8f7;
+  }
 
   .table-heading,
   .table-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    grid-template-columns:
+      minmax(0, 2fr)
+      minmax(0, 1fr)
+      minmax(0, 1fr)
+      minmax(180px, 1.3fr);
     align-items: center;
     gap: 20px;
   }
 
   .table-heading {
-    padding: 15px 20px;
-    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+    border-bottom: 1px solid #eed9d9;
     font-size: 13px;
-    color: #777;
+    color: #948582;
   }
 
   .table-row {
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
+    min-height: 64px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eed9d9;
+    font-size: 16px;
+    color: #250702;
+  }
+
+  .table-row:last-child {
+    border-bottom: none;
   }
 
   .price {
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .booking-actions {
     display: flex;
+    align-items: center;
     gap: 8px;
   }
 
   .booking-actions a {
-    padding: 9px 14px;
-    border-radius: 25px;
-    background: #ead9df;
-    color: #292929;
-    font-size: 12px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 80px;
+    min-height: 36px;
+    padding: 8px 16px;
+    border: 1px solid #c27e8f;
+    border-radius: 50px;
+    background: transparent;
+    color: #a96075;
+    font-size: 13px;
     text-decoration: none;
+    transition: background 0.2s ease;
   }
 
   .booking-actions a:first-child {
-    background: #292929;
-    color: white;
+    background: #c27e8f;
+    color: #fff;
   }
 
-  .mobile-groups,
-  .mobile-booking {
+  .booking-actions a:hover {
+    background: #a96075;
+    color: #fff;
+  }
+
+  /* ==============================
+     MAIN BOOKING BUTTON
+  ============================== */
+
+  .main-booking {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 360px;
+    min-height: 46px;
+    margin: 24px auto 0;
+    padding: 8px 20px;
+    border-radius: 50px;
+    background: var(--color-rose, #c27e8f);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .main-booking:hover {
+    background: var(--color-rose-hover, #a96075);
+  }
+
+  .main-booking:active {
+    background: var(--color-rose-pressed, #87495e);
+  }
+
+  .booking-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+  }
+
+  .booking-arrow img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .mobile-groups {
     display: none;
   }
 
-  /* TABLET */
+  /* ==============================
+     TABLET
+  ============================== */
 
-  @media (max-width: 900px) {
+  @media (max-width: 1100px) {
     .treatments {
-      padding: 40px 30px;
-    }
-
-    .table-heading,
-    .table-row {
-      gap: 10px;
-    }
-  }
-
-  /* MOBILE */
-
-  @media (max-width: 600px) {
-    .treatments {
-      padding: 25px 12px;
-      background: #fbe9eb;
-    }
-
-    .treatments-heading h2 {
-      font-size: 23px;
-    }
-
-    .treatments-heading p {
-      margin-bottom: 15px;
-      font-size: 18px;
-      color: #292929;
+      padding: 40px 32px;
     }
 
     .category-tabs {
-      gap: 5px;
-      margin-bottom: 18px;
-      padding-bottom: 4px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .category-tabs::-webkit-scrollbar {
-      display: none;
+      gap: 8px;
+      margin-bottom: 24px;
     }
 
     .category-tab {
       flex: 0 0 auto;
-      padding: 9px 14px;
-      border-radius: 20px;
-      background: #dfc9cd;
-      font-size: 12px;
-      white-space: nowrap;
+      padding: 8px 16px;
+      font-size: 14px;
     }
 
-    .category-tab.active {
-      background: #b9a3a8;
-      border-bottom: none;
-      color: #fff;
+    .treatments-heading {
+      margin-bottom: 16px;
+    }
+
+    .treatments-heading h2 {
+      font-size: 32px;
     }
 
     .desktop-table {
@@ -414,93 +597,278 @@ const categories = [
     .mobile-groups {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 13px;
     }
 
+    /* ACCORDION */
+
     .treatment-group {
-      overflow: hidden;
-      border-radius: 12px;
-      background: #ead4d8;
+      width: 100%;
+      min-width: 0;
+      padding: 7px;
+      border: 1px solid #eed9d9;
+      border-radius: 8px;
+      background: #fff8f7;
     }
 
     .treatment-group summary {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 42px;
-      padding: 9px 12px;
+      min-height: 30px;
+      gap: 10px;
       list-style: none;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 16px;
+      color: #250702;
     }
 
     .treatment-group summary::-webkit-details-marker {
       display: none;
     }
 
+    .treatment-group summary::marker {
+      content: "";
+    }
+
     .group-name {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
-    .group-circle {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #f8e9ec;
+    .group-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
       flex-shrink: 0;
+      border-radius: 50%;
+      background: #fcefed;
+    }
+
+    .group-icon img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 24px;
+      max-height: 24px;
+      object-fit: contain;
     }
 
     .group-chevron {
-      font-size: 20px;
-      transition: transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      transform: rotate(180deg);
+      transition: transform 0.2s ease;
+    }
+
+    .group-chevron img {
+      width: auto;
+      height: auto;
+      max-width: 24px;
+      max-height: 24px;
     }
 
     .treatment-group[open] .group-chevron {
-      transform: rotate(180deg);
+      transform: rotate(0deg);
     }
 
+    /* ACCORDION CONTENT */
+
     .group-content {
-      padding: 5px 12px 15px 36px;
+      padding-top: 7px;
     }
 
     .mobile-table-heading,
     .mobile-treatment-row {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 0.8fr;
-      gap: 6px;
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 0.4fr)
+        minmax(0, 0.35fr)
+        43px;
+      align-items: center;
+      gap: 12px;
     }
 
     .mobile-table-heading {
       margin-bottom: 10px;
-      color: #999;
+      font-size: 12px;
+      color: #948582;
+    }
+
+    .mobile-treatment-row {
+      min-height: 43px;
+      padding: 8px 0;
+      border-bottom: 1px solid #eed9d9;
+      font-size: 16px;
+      font-weight: 400;
+      color: #250702;
+    }
+
+    .mobile-treatment-row:first-of-type {
+      padding-top: 0;
+    }
+
+    .mobile-treatment-row:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .treatment-zone {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .treatment-duration,
+    .treatment-price {
+      white-space: nowrap;
+    }
+
+    /* ROUND BOOKING BUTTON */
+
+    .treatment-booking {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      background: #c27e8f;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .treatment-booking img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 26.16px;
+      max-height: 26.16px;
+      object-fit: contain;
+    }
+
+    .treatment-booking:hover {
+      background: #a96075;
+    }
+
+    .treatment-booking:active {
+      background: #87495e;
+    }
+
+    .main-booking {
+      max-width: none;
+      margin-top: 16px;
+    }
+  }
+
+  /* ==============================
+     MOBILE
+  ============================== */
+
+  @media (max-width: 700px) {
+    .treatments {
+      padding: 25px 20px;
+    }
+
+    .category-tabs {
+      gap: 5px;
+      margin-bottom: 24px;
+    }
+
+    .category-tab {
+      min-height: 30px;
+      padding: 5px 11px;
+      font-size: 13px;
+      line-height: 18px;
+    }
+
+    .treatments-heading {
+      margin-bottom: 10px;
+    }
+
+    .category-title {
+      font-size: 16px;
+      line-height: 22px;
+      letter-spacing: 1.6px;
+    }
+
+    .treatments-heading h2 {
+      font-size: 20px;
+      line-height: 27px;
+      letter-spacing: 2px;
+    }
+
+    .treatment-group summary {
+      font-size: 14px;
+    }
+
+    .mobile-table-heading,
+    .mobile-treatment-row {
+      grid-template-columns:
+        minmax(0, 1fr)
+        58px
+        48px
+        43px;
+      gap: 8px;
+    }
+
+    .mobile-table-heading {
       font-size: 10px;
     }
 
     .mobile-treatment-row {
-      padding: 5px 0;
-      font-size: 11px;
-      color: #333;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
-    .mobile-treatment-row span:last-child {
-      text-align: right;
-      font-weight: 600;
+    .main-booking {
+      min-height: 44px;
+      font-size: 14px;
+    }
+  }
+
+  /* ==============================
+     SMALL MOBILE
+  ============================== */
+
+  @media (max-width: 360px) {
+    .treatments {
+      padding-inline: 12px;
     }
 
-    .mobile-booking {
-      display: block;
-      width: 100%;
-      margin-top: 14px;
-      padding: 13px;
-      box-sizing: border-box;
-      border-radius: 8px;
-      background: #c5a8ae;
-      color: #292929;
-      text-align: center;
-      font-size: 13px;
-      text-decoration: none;
+    .mobile-table-heading,
+    .mobile-treatment-row {
+      grid-template-columns:
+        minmax(0, 1fr)
+        48px
+        42px
+        43px;
+      gap: 5px;
+    }
+
+    .mobile-treatment-row {
+      font-size: 12px;
+    }
+
+    .category-tab {
+      font-size: 12px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .category-tab,
+    .booking-actions a,
+    .group-chevron,
+    .treatment-booking,
+    .main-booking {
+      transition: none;
     }
   }
 </style>
